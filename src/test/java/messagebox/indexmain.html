@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jQuery动态提示消息框效果</title><base target="_blank" />
+	<style type="text/css">
+		* { font-family: monaco; }
+		div.item_keleyi_com { width:100px; height:50px; background-color: maroon; text-align:center; padding-top:25px; }
+		div#item_keleyi_com_1 { position: absolute; top: 50px; left: 50px;color: white; }
+		div#item_keleyi_com_2 { position: absolute; top: 500px; left: 0px;color: white; }
+		div#item_keleyi_com_3 { position: absolute; top: 0px; left: 500px;color: white; }
+		div#item_keleyi_com_4 { position: absolute; top: 500px; left: 500px; color: white;}
+		ul{ list-style:none;padding:0px 0px 0px 10px;}a{color:Blue;}
+	</style>
+	<link rel="stylesheet" href="http://keleyi.com/keleyi/phtml/jqtexiao/2/stylesheets/jquery.tooltip/jquery.tooltip.css" type="text/css" />
+	<script type="text/javascript" src="http://keleyi.com/keleyi/pmedia/jquery/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://keleyi.com/keleyi/phtml/jqtexiao/2/javascripts/jquery.tooltip.js"></script>
+	<script type="text/javascript">
+		$j = jQuery.noConflict();
+		$j(document).ready(function(){
+			$j("div.item_kel"+"eyi_com").tooltip();
+		});
+	</script>
+</head>
+
+<body>
+<div id="item_keleyi_com_1" class="item_keleyi_com">
+	柯乐义
+	<div class="tooltip_description" style="display:none" title="柯乐义详细信息">
+		本网站的名称：柯乐义<br />
+		本网站的网址： keleyi.com <br />
+		本站提供jQuery特效,Javascript实例，ASP.NET源码等内容资料，欢迎访问！柯 乐 义
+		<br />工具：http://tool.keleyi.com
+		<br />搜索本站内容：http://so.keleyi.com
+	</div>
+</div>
+
+<div id="item_keleyi_com_2" class="item_keleyi_com">
+	jQuery
+	<div class="tooltip_description" style="display:none" title="jQuery介绍">
+		网址：http://keleyi.com/menu/jquery/
+		<br />柯乐义网上有许多jQuery的特效和知识，欢迎访问。
+		jQuery实现脚本与页面的分离<br />
+		节省开发者学习时间<br />
+		让JavaScript编程变得有趣<br /><br /><br />
+		更多信息请访问：http://so.keleyi.com/ <br />
+		搜索：jQuery的优势与不足
+	</div>
+</div>
+
+<div id="item_keleyi_com_3" class="item_keleyi_com">
+	HTML5
+	<div class="tooltip_description" style="display:none" title="HTML5介绍">
+		HTML5的发展越来越迈向成熟，很多的应用已经逐渐出现在你我日常生活中了，不只让传统网站上的互动Flash逐渐的被HTML5的技术取代，更重要的是可以透过HTML5的技术来开发跨平台的手机软件，让许多开发者感到十分兴奋！<br />
+		一般广义而言的HTML5则包含了HTML、CSS和JavaScript三个部分，不单单只是HTML部分而已，CSS 3和JavaScript也有许多的创新，让整个网页程序功能更加缤纷。<br />
+		keleyi.com
+	</div>
+</div>
+
+<div id="item_keleyi_com_4" class="item_keleyi_com">
+	Javascript
+	<div class="tooltip_description" style="display:none" title="Javascript介绍">
+		在javascript中，变量的作用域有全局（window对象）作用域和函数调用作用域。<br />
+		js获取本机的外网/广域网ip地址<br /><br /><br />
+		更多信息请访问：http://so.keleyi.com/ <br />
+		搜索：Javascript作用域<br />
+		js获取本机的外网/广域网ip地址<br />
+
+	</div>
+</div>
+<div style="clear:both;margin-top:130px;width:960px;">
+	<h3>jQuery动态提示消息框效果</h3>
+	<p>请把光标移动到四个矩形上。适用浏览器：IE8、360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. <br />来源：<a href="http://keleyi.com/">柯乐义</a> <a href="http://keleyi.com/a/bjac/hxv86dyi.htm">原文</a></p>
+	<ul>
+		<li><a href="http://keleyi.com/a/bjac/kjsrt3b0.htm">jQuery AJAX</a></li>
+		<li><a href="http://keleyi.com/a/bjac/182di68b.htm">导航样式</a></li>
+		<li><a href="http://keleyi.com/a/bjac/mt97p5y9.htm">侧边导航</a></li>
+		<li><a href="http://keleyi.com/dev/3068696139522ae4.htm">树形菜单</a></li>
+		<li><a href="http://keleyi.com/a/bjac/ck9atu5j.htm">jquery ui 可折叠手风琴菜单</a></li><li><a href="http://keleyi.com/a/bjac/r55i6646.htm">jQuery :even 偶数选择器</a></li><li><a href="http://keleyi.com/a/bjac/9rf4gedp.htm">展开、收起div的jQuery代码</a></li><li><a href="http://keleyi.com/a/bjac/mnmpm4bv.htm">jQuery图片走马灯示例</a></li>
+	</ul>
+</div>
+</body>
+</html>

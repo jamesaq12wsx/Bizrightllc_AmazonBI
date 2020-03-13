@@ -1,0 +1,260 @@
+$(".tab>li").click(function(){
+      var index=$(this).index();
+      $(this).addClass("on").siblings("li").removeClass("on");
+      $(".tabCt:eq("+index+")").show().siblings(".tabCt").hide();
+      if($(".tabCt:eq("+index+")").height()+103>$(".navSKU").height()){
+          $(".nav,.navSKU,.compareBox").height($(".navSKU").height());
+          $(".compareBox .tabCt").height(($(".navSKU").height()-200));
+          $(".compareBox .tabCt").css({"width":"190px","overflow-y":"auto"});
+      }
+});
+
+/*------------------------------------------------------------------------------------------------------------------------------*/
+var asin=sessionStorage.asin;//B00NN2RYHY
+var sku=sessionStorage.sku_fx;
+function Amazon_SKUAnalysis_Operation_SalesAnalysis_PlatformSalesAnalysis(){
+	var dataStr = $('#reportrange span').text();
+	var d = dataStr.split('至');
+	var startTime = d[0].trim();
+	var endTime = d[1].trim();
+	$.ajax({
+		url:path+'/sku/Amazon_SKUAnalysis_Operation_SalesAnalysis_PlatformSalesAnalysis.htm',
+		data:{
+			asin:asin,
+			startTime:startTime,
+			endTime:endTime
+		},
+		type:'post',
+		success:function(value){
+			var data=JSON.parse(value);
+			if(data.status=='1'){
+				$("#commonProgress>tbody").html('')
+				$.each(data.data,function(){
+					$("#commonProgress>tbody").append('<tr> <td style="text-align: left;padding-left: 30px;">'+this.channel+'</td> <td style="text-align:left;"> <div class="progress"> <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: '+this.xiaoliang_zhanbi+';"> </div> </div> <span>'+this.xiaoliang_zhanbi+'</span> </td> <td>'+this.xiaoliang+'</td> </tr>')
+				})
+			}else{
+				
+			}
+		}
+	
+	})
+}
+
+function Amazon_SKUAnalysis_Operation_SalesAnalysis_Trend(){
+	var echart42 = echarts.init(document.getElementById('echart42'),'shine');  // 基于准备好的dom，初始化echarts实例
+	
+	var dataStr = $('#reportrange span').text();
+	var d = dataStr.split('至');
+	var startTime = d[0].trim();
+	var endTime = d[1].trim();
+	$.ajax({
+		url:path+'/sku/Amazon_SKUAnalysis_Operation_SalesAnalysis_Trend.htm',
+		data:{
+			asin:asin,
+			startTime:startTime,
+			endTime:endTime
+		},
+		type:'post',
+		success:function(value){
+			var data=JSON.parse(value);
+			if(data.status=='1'){
+				var date=[];
+				var channel=[];
+				var series=[];
+				
+				$.each(data.data,function(index){
+					if($.inArray(this.datatime, date)==-1){
+						date.push(this.datatime);
+					}
+					if($.inArray(this.channel, channel)==-1){
+						channel.push(this.channel);
+					}
+					
+				})
+				var series=[];
+				$.each(channel,function(count){
+					var series_data=[];
+					$.each(date,function(num){
+						$.each(data.data,function(index){
+							if(date[num]==this.datatime && channel[count]==this.channel){
+								series_data[$.inArray(this.datatime, date)]=this.xiaoliang
+							}
+						})
+					})
+					
+					x={
+			            name: channel[count],
+			            type: 'bar',
+			            barMaxWidth:40,
+			            stack: '总量',
+			            data: series_data
+			        }
+					series.push(x)
+				})
+				
+				 // 使用刚指定的配置项和数据显示图表。
+				echart42.setOption({
+				    tooltip : {
+				        trigger: 'axis',
+				    },
+				    legend: {
+				        data: channel
+				    },
+				    grid: {
+				        left: '10px',
+				        right: '50px',
+				        top: '40px',
+				        bottom: '10px',
+				        containLabel: true
+				    },
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: ['20%','20%'],
+				        data: date
+				    },
+				    yAxis: {
+				        type: 'value'
+				    },
+				    series: series
+				},true);
+			}else{
+				echart42.setOption({
+				    tooltip : {
+				        trigger: 'axis',
+				    },
+				    legend: {
+				        data: []
+				    },
+				    grid: {
+				        left: '10px',
+				        right: '50px',
+				        top: '40px',
+				        bottom: '10px',
+				        containLabel: true
+				    },
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: ['20%','20%'],
+				        data: []
+				    },
+				    yAxis: {
+				        type: 'value'
+				    },
+				    series: series
+				},true);
+			}
+		}
+	
+	})
+}
+function Amazon_SKUAnalysis_Operation_DetailedData(){
+	showLoading();
+	var dataStr = $('#reportrange span').text();
+	var d = dataStr.split('至');
+	var startTime = d[0].trim();
+	var endTime = d[1].trim();
+	$.ajax({
+		url:path+'/sku/Amazon_SKUAnalysis_Operation_DetailedData.htm',
+		data:{
+			asin:asin,
+			startTime:startTime,
+			endTime:endTime
+		},
+		type:'post',
+		success:function(value){
+			closeLoading();
+			var data=JSON.parse(value);
+			if(data.status=='1'){
+				$("#zj_title").html('<th style="text-align: center;">日期</th>')
+				$("#zj_tr_td").html('')
+				$.each(data.data[0],function(name,value){
+					if(name!='xiaoliang' && name!='datatime' ){
+						$("#zj_title").append('<th style="text-align: center;">'+name+'</th>')
+					}
+				})
+				$("#zj_title").append('<th style="text-align: center;">总计</th>')
+				$.each(data.data,function(index){
+					td=""
+					$.each(data.data[index],function(name,value){
+						if(name=='datatime'){
+							datatime=value
+						}else if(name=='xiaoliang'){
+							xiaoliang=value
+						}else{
+							td=td+'<td name="'+name+'">'+value+'</td>'
+						}
+					})
+					$("#zj_tr_td").append('<tr> <td>'+datatime+'</td> '+td+' <td style="color:#000;">'+xiaoliang+'</td> </tr>')
+				})
+				var c=0;
+				
+				$.each($("#zj_tr_td").find('tr'),function(index){
+					//alert($(this).find('td').get(0).innerHTML)
+					//alert($(this).find('td').size()-2)
+					c=$(this).find('td').size()-1;
+					
+				})
+				zj_td="";
+				for(var i=1;i<=c;i++){
+					var x=0;
+					$.each($("#zj_tr_td").find('tr'),function(index){
+						x=x+Number($(this).find('td').get(i).innerHTML)
+					})
+					zj_td=zj_td+'<td style="color:#000;">'+x+'</td>'
+				}
+				$("#zj_tr_td").append('<tr> <td>总计</td> '+zj_td+'</tr>')
+			}else{
+
+			}
+		}
+	
+	})
+}
+$('#reportrange').change(function(){
+	Amazon_SKUAnalysis_Operation_SalesAnalysis_PlatformSalesAnalysis()
+	Amazon_SKUAnalysis_Operation_SalesAnalysis_Trend()
+	Amazon_SKUAnalysis_Operation_DetailedData()
+})
+$("#btn_dc").click(function(){
+	var dataStr = $('#reportrange span').text();
+	var d = dataStr.split('至');
+	var startTime = d[0].trim();
+	var endTime = d[1].trim();
+	window.location.href=path+"/sku/Amazon_SKUAnalysis_Operation_DetailedData_dowload.htm?asin="+asin+"&startTime="+startTime+"&endTime="+endTime;
+})
+function showData(){
+	$("head").append('<title>'+sku+'</title>')
+	Amazon_SKUAnalysis_SkuSearch_Details(asin)
+	SKU_Jingpin(asin)
+	Amazon_MonitoringOverview_SKU_SimilarProducts(asin)
+	Amazon_SKUAnalysis_Operation_SalesAnalysis_PlatformSalesAnalysis()
+	Amazon_SKUAnalysis_Operation_SalesAnalysis_Trend()
+	Amazon_SKUAnalysis_Operation_DetailedData()
+}
+function showJINPINData(a,obj){
+	if(hasClass(obj, "xz")){
+		$(obj).removeClass("xz");
+		return ;
+	}
+	if($(".xz").size()>0){
+ 		//alert("至多选择两个！");
+ 		return ;
+ 	}else{
+ 		$(obj).addClass("xz");
+ 	}
+	 asin=a;
+	 Amazon_SKUAnalysis_SkuSearch_Details(asin)
+	 Amazon_SKUAnalysis_Operation_SalesAnalysis_PlatformSalesAnalysis()
+	 Amazon_SKUAnalysis_Operation_SalesAnalysis_Trend()
+	 Amazon_SKUAnalysis_Operation_DetailedData()
+}
+function showJINPINData1(a){
+	 asin=a;
+	 Amazon_SKUAnalysis_SkuSearch_Details(asin)
+	 Amazon_SKUAnalysis_Operation_SalesAnalysis_PlatformSalesAnalysis()
+	 Amazon_SKUAnalysis_Operation_SalesAnalysis_Trend()
+	 Amazon_SKUAnalysis_Operation_DetailedData()
+}
+{
+	showData()
+}

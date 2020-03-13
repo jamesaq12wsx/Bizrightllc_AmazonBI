@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analyze.dao.ProductLabelMapper">
+  <resultMap id="BaseResultMap" type="com.analyze.model.ProductLabel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="labelName" jdbcType="NVARCHAR" property="labelname" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="userName" jdbcType="NVARCHAR" property="username" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, labelName, createDate, userName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from productLabel
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from productLabel
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.analyze.model.ProductLabel">
+    insert into productLabel (id, labelName, createDate, 
+      userName)
+    values (#{id,jdbcType=BIGINT}, #{labelname,jdbcType=NVARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{username,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.analyze.model.ProductLabel">
+    insert into productLabel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="labelname != null">
+        labelName,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="labelname != null">
+        #{labelname,jdbcType=NVARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.analyze.model.ProductLabel">
+    update productLabel
+    <set>
+      <if test="labelname != null">
+        labelName = #{labelname,jdbcType=NVARCHAR},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.analyze.model.ProductLabel">
+    update productLabel
+    set labelName = #{labelname,jdbcType=NVARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      userName = #{username,jdbcType=NVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getProductLabel" resultType="map">
+  	select * from productLabel
+  	<!-- select pl.*,al.asin from productLabel  pl LEFT JOIN asinLabel al on al.labelName=pl.labelName  -->
+  </select>
+   <select id="selectByLabelName" parameterType="java.lang.String" resultType="int">
+   select count(*) from productLabel where labelName=#{username,jdbcType=NVARCHAR}
+   </select>
+   <select id="selectTableAsinLabel" parameterType="java.util.Map" resultType="int">
+   select count(*) from asinLabel where labelName=#{labelName,jdbcType=NVARCHAR} and asin=#{asin,jdbcType=NVARCHAR}
+   </select>
+   <insert id="addAsinLabel" parameterType="java.util.Map">
+   insert into asinLabel (asin,labelName) values (#{asin,jdbcType=NVARCHAR},#{labelName,jdbcType=NVARCHAR})
+   </insert>
+   <select id="getProductLabelByasin" parameterType="java.util.Map" resultType="map">
+   select * from asinLabel where asin=#{asin,jdbcType=NVARCHAR}
+   </select>
+   
+   <delete id="delAsinLabel" parameterType="java.util.Map">
+   delete from asinLabel where asin=#{asin,jdbcType=NVARCHAR} and  labelName=#{labelName,jdbcType=NVARCHAR}
+   
+   </delete>
+</mapper>

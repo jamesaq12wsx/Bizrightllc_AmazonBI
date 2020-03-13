@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Disabled</key>
+        <false/>
+        <key>KeepAlive</key>
+        <true/>
+        <key>Label</key>
+        <string>com.astrill.netdayping.plist</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/Users/zhucan/Documents/2019BIData/netshell/ping.sh</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>StandardErrorPath</key>
+        <string>/Users/zhucan/Documents/2019BIData/netshell/log/stderr</string>
+        <key>StandardOutPath</key>
+        <string>/Users/zhucan/Documents/2019BIData/netshell/log/stdout</string>
+        <key>StartInterval</key>
+        <dict>
+            <key>Minute</key>
+            <integer>5</integer>
+        </dict>
+    </dict>
+</plist>

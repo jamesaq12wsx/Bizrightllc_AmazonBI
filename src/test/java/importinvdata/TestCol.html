@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>测试HTML页面</title>
+    e
+    <style type="text/css">
+        #messagebox {
+            width:200px;
+            height:40px;
+            background-color:#f66;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            margin:10px auto;
+            display:none;
+            z-index:999;
+            text-align:center;
+            line-height:40px;
+        }
+    </style>
+</head>
+<script>
+    /*提示信息框动态效果*/
+    var messageboxT;
+    var top1 = 10;
+    var opacity = 0;
+    //初始化数据
+    function initMessagebox(info) {
+        top1 = 10;
+        opacity = 0;
+        opacity1 = 1;
+        $("#messagebox").html(info);
+        $("#messagebox").css({ 'display': 'block' });
+        appearMessagebox();
+    }
+    //出现信息框
+    function appearMessagebox() {
+        top1 += 1;
+        opacity += 0.05;
+        if (opacity < 1) {
+            messageboxT = setTimeout("appearMessagebox()", 15);
+        }
+        else {
+            disappearMessagebox();
+        }
+        $("#messagebox").css({ 'top': String(top1) + 'px' });
+        $("#messagebox").css({ 'opacity': String(opacity) });
+    }
+    //隐藏信息框
+    function disappearMessagebox() {
+        opacity -= 0.05;
+        if (opacity > 0.05) {
+            messageboxT = setTimeout("disappearMessagebox()", 40);
+        }
+        else {
+            opacity = 0;
+            $("#messagebox").css({ 'display': 'none' });
+        }
+        $("#messagebox").css({ 'opacity': String(opacity) });
+    }
+</script>
+<SCRIPT LANGUAGE="JavaScript">
+//    function autoRowSpan(tb,row,col)
+//    {
+//        var lastValue="";
+//        var value="";
+//        var pos=1;
+//        for(var i=row;i<tb.rows.length;i++){
+//            value = tb.rows[i].cells[col].innerText;
+//            if(lastValue == value){
+//                tb.rows[i].deleteCell(col);
+//                tb.rows[i-pos].cells[col].rowSpan = tb.rows[i-pos].cells[col].rowSpan+1;
+//                pos++;
+//            }else{
+//                lastValue = value;
+//                pos=1;
+//            }
+//        }
+//    }
+
+    /**
+     * 合并单元格(如果结束行传0代表合并所有行)
+     * @param table1    表格的ID
+     * @param startRow  起始行
+     * @param endRow    结束行
+     * @param col   合并的列号，对第几列进行合并(从0开始)。第一行从0开始
+     */
+    function mergeCell(table1, startRow, endRow, col) {
+//        alert("step1"+table1);
+
+        var tb = document.getElementById(table1);
+        if(!tb || !tb.rows || tb.rows.length <= 0) {
+            return;
+        }
+//        alert("step2");
+        if(col >= tb.rows[0].cells.length || (startRow >= endRow && endRow != 0)) {
+            return;
+        }
+//        alert("step3");
+        if(endRow == 0) {
+            endRow = tb.rows.length - 1;
+        }
+//        alert("step4");
+        for(var i = startRow; i < endRow; i++) {
+            if(tb.rows[startRow].cells[col].innerHTML == tb.rows[i + 1].cells[col].innerHTML) { //如果相等就合并单元格,合并之后跳过下一行
+                tb.rows[i + 1].removeChild(tb.rows[i + 1].cells[col]);
+                tb.rows[startRow].cells[col].rowSpan = (tb.rows[startRow].cells[col].rowSpan) + 1;
+            } else {
+                mergeCell(table1, i + 1, endRow, col);
+                break;
+            }
+        }
+        alert("step5");
+    }
+
+
+function info($this){
+
+//    alert("haha");
+    Dialog.info( "info 对话框", "内容区域" );
+
+}
+
+</SCRIPT>
+<BODY onload="mergeCell('productlineskutable',2,999,0)">
+    <table id="productlineskutable" class="table productlineskutable">
+        <thead>
+        <tr>
+            <th >ProductLine</th>
+            <th >hyper</th>
+            <th >ASIN</th>
+            <th >SKU</th>
+            <th >BB%</th>
+            <th >MFN</th>
+            <th >FBA</th>
+            <th >Inbound</th>
+            <th >Retail</th>
+            <th >openPO</th>
+            <th >Amazon(WBR)</th>
+            <th >PRIME<br>库存时间</th>
+            <th >FBA<br>库存时间</th>
+            <th >总库存<br>时间</th>
+        </tr>
+        <tr></tr>
+        </thead>
+        <tbody>
+        <TR >
+            <TD>国家</TD>
+            <TD>地区</TD>
+        </TR>
+        <TR>
+            <TD></TD>
+            <TD>河南</TD>
+        </TR>
+        <TR>
+            <TD></TD>
+            <TD>河南</TD>
+        </TR>
+        <TR>
+            <TD>中国</TD>
+            <TD >河南</TD>
+        </TR>
+        <TR>
+            <TD>中国</TD>
+            <TD>四川</TD>
+        </TR>
+        <TR>
+            <TD>中国</TD>
+            <TD>北京</TD>
+        </TR>
+        <TR>
+            <TD>美国</TD>
+            <TD >纽约</TD>
+        </TR>
+        <TR>
+            <TD>美国</TD>
+            <TD>洛杉矶</TD>
+        </TR>
+        <TR>
+            <TD>英国</TD>
+            <TD>伦敦</TD>
+        </TR>
+
+        </tbody>
+
+    </table>
+    <button onclick="initMessagebox('TEST')">测试弹出框</button>
+</BODY>
+</HTML>

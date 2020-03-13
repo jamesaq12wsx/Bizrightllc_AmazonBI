@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JSTree</title>
+    <link rel="stylesheet" href="js/themes/default/style.min.css"/>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jstree.min.js"></script>
+</head>
+<body>
+<div id="jstree_div"></div>
+<script type="text/javascript">
+    //权限分配
+    $('#authority').click(function () {
+        $("#jstree").jstree({
+            "core": {
+                "themes": {
+                    "responsive": false
+                },
+                // so that create works
+                "check_callback": true,
+                'data': function (obj, callback) {
+                    var jsonstr = "[]";
+                    var jsonarray = eval('(' + jsonstr + ')');
+                    $.ajax({
+                        type: "GET",
+                        url: "/demo/authority/getAuthoritys",
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            var arrays = result;
+                            for (var i = 0; i < arrays.length; i++) {
+                                console.log(arrays[i])
+                                var arr = {
+                                    "id": arrays[i].id,
+                                    "parent": arrays[i].parentId == "root" ? "#" : arrays[i].parentId,
+                                    "text": arrays[i].name
+                                }
+                                jsonarray.push(arr);
+                            }
+                        }
+
+                    });
+                    callback.call(this, jsonarray);
+                }
+            },
+            "types": {
+                "default": {
+                    "icon": "glyphicon glyphicon-flash"
+                },
+                "file": {
+                    "icon": "glyphicon glyphicon-ok"
+                }
+            },
+            "state": {"key": "demo2"},
+            "plugins": ["dnd", "state", "types", "checkbox", "wholerow"]
+        });
+        $('#setAuthority').modal();
+    });
+</script>
+</body>
+</html>
+

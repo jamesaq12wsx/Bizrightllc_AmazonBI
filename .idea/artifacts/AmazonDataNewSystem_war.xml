@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="AmazonDataNewSystem:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="AmazonDataNewSystem.war">
+      <element id="artifact" artifact-name="AmazonDataNewSystem:war exploded" />
+    </root>
+  </artifact>
+</component>

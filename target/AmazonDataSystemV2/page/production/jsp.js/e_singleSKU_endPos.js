@@ -1,0 +1,200 @@
+﻿/**
+ * 文档加载完成
+ */
+$(document).ready(function(){
+	var sku = sessionStorage.getItem('sku');
+	var skuName = sessionStorage.getItem('skuName');
+	var skuImgUrl = sessionStorage.getItem('skuImgUrl');
+	$('#skuName').text(skuName);
+	$('#skuImgUrl').attr('src',skuImgUrl);
+	
+	showData();
+});
+
+
+var arr_so=new Array();
+var arr_SAmz=new Array();
+var arr_total=new Array();
+var arr_date=new Array();
+
+var totalNum = 0;
+var AvgNum=0;
+var MaxNum=0;
+var MinNum=0;
+
+/**
+ * TODO: 暂时保留原显示逻辑
+ */
+// function showData(){
+// 	var myjson = {};
+// 	myjson.sku=sessionStorage.getItem('sku');
+// 	$('#endpostable tbody').html('');
+// 	$('#endpostable #skus').html('');
+//
+//
+// 	showLoading();
+// 	$.ajax({
+// 		type : 'get',
+// 		url : path + '/sku/getSkuEndPos.htm',
+// 		timeout : 100000,
+// 		data : myjson,
+// 		dataType : 'json',
+// 		success : function(data) {
+// 			closeLoading();
+// 			if (data.status == 1) {
+//
+// 				$('#endpostable #SAmz-set').attr('colspan',data.skus.length);
+//
+// 				$.each(data.skus,function(){
+// 					$('#endpostable #skus').append(
+// 							'<th>'+this+'</th>'
+// 					);
+// 				})
+//
+//
+//
+// 				$.each(data.data,function(index){
+//
+// 					var arr = this.arr;
+// 					var html='';
+// 					$.each(arr,function(){
+// 						html=html+' <td>'+this+'</td>';
+// 					})
+//
+// 					$('#endpostable tbody').append(
+// 							'<tr>'+
+// 	                        '<td>'+this.year_week+'</td>'+
+// 	                        '<td>'+this.So_sales+'</td>'+
+// 	                       ' <td>'+this.SAmz_sales+'</td>'+
+// 	                       ' <td>'+this.total+'</td>'+
+// 	                       html+
+// 	                   ' </tr>'
+// 					);
+//
+// 					arr_so.push(this.So_sales);
+// 					arr_SAmz.push(this.SAmz_sales);
+// 					arr_total.push(this.total);
+// 					arr_date.push(this.year_week);
+//
+// 					totalNum=totalNum+parseInt(this.total);
+// 					if(this.total>MaxNum){
+// 						MaxNum=parseInt(this.total);
+// 					}
+//
+// 					if(index==0){
+// 						MinNum=parseInt(this.total);
+// 					}else{
+// 						if(this.total<MinNum){
+// 							MinNum=parseInt(this.total);
+// 						}
+// 					}
+//
+// 				});
+//
+// 				AvgNum=totalNum/(data.data.length);
+//
+// 				$('#totalNum').html('Total: '+totalNum);
+// 				$('#AvgNum').html('Avg: '+AvgNum);
+// 				$('#MaxNum').html('Max: '+MaxNum);
+// 				$('#MinNum').html('Min: '+MinNum);
+//
+// 			}
+// 		},
+// 		error : function() {
+// 			console.log('数据请求失败')
+// 		}
+// 	});
+// }
+
+
+function showData(){
+	var myjson = {};
+	myjson.sku=sessionStorage.getItem('sku');
+	$('#endpostable tbody').html('');
+	$('#endpostable #skus').html('');
+
+
+	showLoading();
+	$.ajax({
+		type : 'get',
+		url : path + '/sku/getSkuEndPosV2.htm',
+		timeout : 100000,
+		data : myjson,
+		dataType : 'json',
+		success : function(data) {
+			closeLoading();
+			if (data.status == 1) {
+
+				$('#endpostable #SAmz-set').attr('colspan',data.skus.length);
+
+				$.each(data.skus,function(){
+					$('#endpostable #skus').append(
+						'<th>'+this+'</th>'
+					);
+				})
+
+
+
+				$.each(data.data,function(index){
+
+					var arr = this.arr;
+					var html='';
+					$.each(arr,function(){
+						html=html+' <td>'+this+'</td>';
+					})
+
+					$('#endpostable tbody').append(
+						'<tr>'+
+						'<td>'+this.year_week+'</td>'+
+						'<td>'+this.So_Sales+'</td>'+
+						' <td>'+this.SAmz_Sales+'</td>'+
+						' <td>'+this.SAmz_Set_Tot_Sales+'</td>'+
+						html+
+						' </tr>'
+					);
+
+					arr_so.push(this.So_Sales);
+					arr_SAmz.push(this.SAmz_Sales);
+					arr_total.push(this.SAmz_Set_Tot_Sales);
+					arr_date.push(this.year_week);
+
+					totalNum=totalNum+parseInt(this.SAmz_Set_Tot_Sales);
+					if(this.SAmz_Set_Tot_Sales>MaxNum){
+						MaxNum=parseInt(this.SAmz_Set_Tot_Sales);
+					}
+
+					if(index==0){
+						MinNum=parseInt(this.SAmz_Set_Tot_Sales);
+					}else{
+						if(this.SAmz_Set_Tot_Sales<MinNum){
+							MinNum=parseInt(this.SAmz_Set_Tot_Sales);
+						}
+					}
+
+				});
+
+				AvgNum=totalNum/(data.data.length);
+
+				$('#totalNum').html('Total: '+totalNum);
+				$('#AvgNum').html('Avg: '+AvgNum);
+				$('#MaxNum').html('Max: '+MaxNum);
+				$('#MinNum').html('Min: '+MinNum);
+
+			}
+		},
+		error : function() {
+			console.log('数据请求失败')
+		}
+	});
+}
+
+
+
+function goEcharts(){
+	
+	sessionStorage.setItem('arr_so',arr_so);
+	sessionStorage.setItem('arr_SAmz',arr_SAmz);
+	sessionStorage.setItem('arr_total',arr_total);
+	sessionStorage.setItem('arr_date',arr_date);
+	window.open(path+'/e_singleSKU_chart.htm');
+}

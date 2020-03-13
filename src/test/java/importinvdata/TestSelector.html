@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="<%=path %>/page/production/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+</head>
+<body>
+<input style="height:30px;width:150px;" value="" id="test" name="test" class="easyui-combobox">
+<!-- easyui核心UI文件 css -->
+<link href="easyui/themes/default/easyui.css" rel="stylesheet" type="text/css"/>
+<!-- easyui图标 -->
+<link href="easyui/themes/icon.css" rel="stylesheet" type="text/css"/>
+</body>
+<Script>
+    var data = [
+        {'text' : '未选择', 'value' : ''},
+        {'text' : '亚洲', 'value' : '1'},
+        {'text' : '欧洲', 'value' : '2'},
+        {'text' : '非洲', 'value' : '3'},
+        {'text' : '北美洲', 'value' : '4'},
+        {'text' : '南美洲', 'value' : '5'},
+        {'text' : '大洋洲', 'value' : '6'},
+        {'text' : '南极洲', 'value' : '7'}
+    ];
+
+    $('#test').combobox({
+        textField : 'text',
+        valueField : 'value',
+        panelHeight : 'auto',
+        data : data
+    })
+
+</Script>
+</html>

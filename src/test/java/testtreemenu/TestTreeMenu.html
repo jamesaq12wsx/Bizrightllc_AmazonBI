@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JSTree</title>
+    <link rel="stylesheet" href="style.min.css"/>
+    <script src="jquery.min.js"></script>
+    <script src="jstree.min.js"></script>
+</head>
+<body>
+<div id="using_json_2"></div>
+<script type="text/javascript">
+    $('#using_json_2').jstree({
+        'core': {
+            'data': [{
+                "id": "ajson1",
+                "parent": "#",
+                "text": "Simple root node"
+            }, {"id": "ajson2", "parent": "#", "text": "Root node 2"}, {
+                "id": "ajson3",
+                "parent": "ajson2",
+                "text": "Child 1"
+            }, {"id": "ajson4", "parent": "ajson2", "text": "Child 2"},]
+        }
+    });
+</script>
+</body>
+</html>
+
