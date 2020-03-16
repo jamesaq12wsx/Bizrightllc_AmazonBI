@@ -188,11 +188,12 @@
   
   
   <select id="login" resultMap="BaseResultMap">
+        update dbo.[user] set LastLogonDate=GETDATE() where username=#{0} and password=#{1};
+
 		select
 		<include refid="Base_Column_List" />
 		 from dbo.[user]
-		where username=#{0} and password=#{1}
-		
+		where username=#{0} and password=#{1};
 	</select>
 	<select id="getUserAccount" resultType="map">
 		select * from dbo.[user] where is_parent =  #{isParent,jdbcType=NVARCHAR}
