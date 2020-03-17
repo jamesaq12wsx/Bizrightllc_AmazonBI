@@ -37,45 +37,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>RedisUtil</find>
-      <find>writer</find>
-      <find>List&lt;String&gt;</find>
-      <find>List&lt;Object&gt;</find>
-      <find>Amazon_MonitoringOverview_BestSellerTopDetail</find>
-      <find>resultType=&quot;List&quot;</find>
-      <find>resultType=</find>
-      <find>qryPromotionListByDate</find>
-      <find>ExcelWriter</find>
-      <find>\&lt;\%\@ page language\=\&quot;java\&quot; import\=\&quot;java\.util\.\*\&quot; pageEncoding\=\&quot;UTF\-8\&quot;\%\&gt;\n\&lt;\%\@ taglib prefix\=\&quot;c\&quot; uri\=\&quot;http\:\/\/java\.sun\.com\/jsp\/jstl\/core\&quot;\%\&gt;\n\&lt;\%\nString path \= request\.getContextPath\(\)\;\nString basePath \= request\.getScheme\(\)\+\&quot;\:\/\/\&quot;\+request\.getServerName\(\)\+\&quot;\:\&quot;\+request\.getServerPort\(\)\+path\+\&quot;\/\&quot;\;\n\%\&gt;\n\&lt;\!DOCTYPE html\&gt;\n\&lt;html lang\=\&quot;en\&quot;\&gt;\n  \&lt;head\&gt;\n    \&lt;jsp\:include page\=\&quot;\.\.\/production\/common\.jsp\/commonCss\.jsp\&quot;\/\&gt;\n  \&lt;\/head\&gt;\n  \&lt;body\&gt;\n   \&lt;\!\-\- 头部 \-\-\&gt;\n    \&lt;ul class\=\&quot;nav\&quot;\&gt;\&lt;\/ul\&gt;\n    \&lt;\!\-\- 内容 \-\-\&gt;\n    \&lt;div class\=\&quot;main\&quot;\&gt;\n        \&lt;div class\=\&quot;userManagement\&quot;\&gt;\n          \&lt;span\&gt;Hello\! \&lt;b\&gt;\$\{final_username\}\&lt;\/b\&gt;\&lt;\/span\&gt;\n          \&lt;div\&gt;\n            \&lt;span class\=\&quot;sj\&quot;\&gt;\&lt;\/span\&gt;\n            \&lt;span class\=\&quot;sj2\&quot;\&gt;\&lt;\/span\&gt;\n            \&lt;ul\&gt;\n              \&lt;c\:if test\=\&quot;\$\{accountType \=\=1 \|\| accountType \=\=2 \}\&quot;\&gt;\n              \&lt;li\&gt;\&lt;a href\=\&quot;\&lt;\%\=path \%\&gt;\/accountManage\.htm\&quot;\&gt;users Management\&lt;\/a\&gt;\&lt;\/li\&gt;\n              \&lt;\/c\:if\&gt;\n              \&lt;li\&gt;\&lt;a href\=\&quot;\&lt;\%\=path \%\&gt;\/user\/loginOut\.htm\&quot;\&gt;Log Out\&lt;\/a\&gt;\&lt;\/li\&gt;\n            \&lt;\/ul\&gt;\n          \&lt;\/div\&gt;\n        \&lt;\/div\&gt;\n        \&lt;div\&gt;\n          \&lt;div class\=\&quot;calendar\&quot;\&gt;\n            \&lt;span class\=\&quot;calendarTitle\&quot;\&gt;Promotion Report Download Range\:\&lt;\/span\&gt;\n            \&lt;div id\=\&quot;reportrange\&quot; class\=\&quot;mydate\&quot;\&gt;\n              \&lt;span\&gt;2018\-07\-30 至 2018\-08\-05\&lt;\/span\&gt; \&lt;b class\=\&quot;caret\&quot;\&gt;\&lt;\/b\&gt;\n            \&lt;\/div\&gt;\n          \&lt;\/div\&gt;\n            \&lt;table class\=\&quot;table\&quot; id\=\&quot;table\&quot;\&gt;\n                \&lt;thead\&gt;\n                \&lt;tr\&gt;\n                    \&lt;td class\=\&quot;taskId\&quot;\&gt;Task Id\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 20\%\&quot;\&gt;Task Name\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 15\%\&quot;\&gt;Upload File Name\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 15\%\&quot;\&gt;Download File Name\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 10\%\&quot;\&gt;Task Sts\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 10\%\&quot;\&gt;Insert Time\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 15\%\&quot;\&gt;Action\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 0\%\&quot; hidden\=\&quot;hidden\&quot;\&gt;Upload File Path\&lt;\/td\&gt;\n                    \&lt;td style\=\&quot;width\: 0\%\&quot; hidden\=\&quot;hidden\&quot;\&gt;Download File Path\&lt;\/td\&gt;\n                \&lt;\/tr\&gt;\n                \&lt;\/thead\&gt;\n                \&lt;tbody\&gt;\n\n                \&lt;\/tbody\&gt;\n            \&lt;\/table\&gt;\n    \&lt;\/div\&gt;\n    \&lt;\!\-\- \*\*\*\*\*\*\*\*\*\*\*\*内容 \-\-\&gt;\n  \&lt;\/body\&gt;\n  \&lt;jsp\:include page\=\&quot;\.\.\/production\/common\.jsp\/commonJs\.jsp\&quot;\/\&gt;\n\&lt;\/html\&gt;</find>
-      <find>selectPromotionList</find>
-      <find>to</find>
-      <find>Button</find>
-      <find>selectCountByTaskSts</find>
-      <find>ReportServiceForPromotionImpl</find>
-      <find>ReportServiceForWeekAndMonthOutboundImpl</find>
-      <find>generatePromotionTask</find>
-      <find>down</find>
-      <find>promotionTaskDO</find>
-      <find>replace</find>
-      <find>AlipayConfig</find>
-      <find>AlipayCore</find>
-      <find>UtilDate</find>
-      <find>updatePromotionByTaskId</find>
-      <find>update</find>
-      <find>taskSts</find>
-      <find>taskId</find>
-      <find>查询任务状态</find>
-      <find>获取数据</find>
-      <find>/User</find>
-    </findStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$</dir>
-      <dir>$PROJECT_DIR$/src</dir>
-      <dir>$PROJECT_DIR$/src/main/webapp/page/production/common.jsp</dir>
-    </dirStrings>
-  </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
       <facet id="AmazonDataNewSystem/invalid/Spring" />
@@ -100,11 +61,11 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AmazonBiSpider" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.29424778" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/../2019BI" />
   </component>
   <component name="RecentsManager">
@@ -649,6 +610,7 @@
       </method>
     </configuration>
     <configuration name="Unnamed" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.0" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/" />
       <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -660,7 +622,7 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="Unnamed_AmazonDataNewSystem" />
-        <option name="HTTP_PORT" value="8081" />
+        <option name="HTTP_PORT" value="8080" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -755,6 +717,29 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <option name="contentProportion" value="0.042207792" />
+          <treeState>
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Finished" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration" cleanupOnStartRun="true">
     <configuration>C:\Users\paulin.f\AppData\Roaming\Subversion</configuration>
     <supportedVersion>125</supportedVersion>
@@ -824,29 +809,12 @@
       <workItem from="1582602486364" duration="53482000" />
       <workItem from="1583902979587" duration="19471000" />
       <workItem from="1584069793400" duration="1353000" />
-      <workItem from="1584076950318" duration="1230000" />
+      <workItem from="1584076950318" duration="3897000" />
+      <workItem from="1584322996162" duration="2226000" />
+      <workItem from="1584347447332" duration="4974000" />
+      <workItem from="1584406970649" duration="4609000" />
     </task>
     <servers />
-  </component>
-  <component name="TestHistory">
-    <history-entry file="TestPromotion - 2020.03.12 at 09h 15m 48s.xml">
-      <configuration name="TestPromotion" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestPromotion - 2020.03.12 at 09h 28m 21s.xml">
-      <configuration name="TestPromotion" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestPromotion - 2020.03.12 at 09h 29m 00s.xml">
-      <configuration name="TestPromotion" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestPromotion - 2020.03.12 at 09h 32m 44s.xml">
-      <configuration name="TestPromotion" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestPromotion_main - 2020.03.12 at 09h 15m 33s.xml">
-      <configuration name="TestPromotion.main" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestPromotion_main - 2020.03.12 at 09h 17m 00s.xml">
-      <configuration name="TestPromotion.main" configurationId="JUnit" />
-    </history-entry>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -860,131 +828,97 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="278" key="FileChooserDialogImpl" timestamp="1584076978610">
+    <state x="234" y="188" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584411091275">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="278" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584076978610" />
-    <state width="1877" height="463" key="GridCell.Tab.0.bottom" timestamp="1584073102352">
+    <state x="234" y="188" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584411091275" />
+    <state x="321" y="215" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable" timestamp="1584324758272">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="463" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584073102352" />
-    <state width="1877" height="463" key="GridCell.Tab.0.center" timestamp="1584073102352">
+    <state x="321" y="215" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable/0.0.1920.1040@0.0.1920.1040" timestamp="1584324758272" />
+    <state x="411" y="279" key="FileChooserDialogImpl" timestamp="1584324836124">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="463" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584073102352" />
-    <state width="1877" height="463" key="GridCell.Tab.0.left" timestamp="1584073102352">
+    <state x="411" y="279" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584324836124" />
+    <state width="1769" height="439" key="GridCell.Tab.0.bottom" timestamp="1584413537543">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="463" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584073102352" />
-    <state width="1877" height="463" key="GridCell.Tab.0.right" timestamp="1584073102352">
+    <state width="1769" height="439" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.0.center" timestamp="1584413537543">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="463" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584073102352" />
+    <state width="1769" height="439" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.0.left" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.0.right" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.1.bottom" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.1.center" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.1.left" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.1.right" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.2.bottom" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.2.center" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.2.left" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.2.right" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.3.bottom" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.3.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.3.center" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.3.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.3.left" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.3.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state width="1769" height="439" key="GridCell.Tab.3.right" timestamp="1584413537543">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1769" height="439" key="GridCell.Tab.3.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584413537543" />
+    <state x="320" y="92" key="SettingsEditor" timestamp="1584409208008">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="320" y="92" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1584409208008" />
+    <state x="748" y="291" width="585" height="488" key="find.popup" timestamp="1584092073481">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="748" y="291" width="585" height="488" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1584092073481" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1584347781867">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1584347781867" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>AmazonDataSystemV2:war</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.29424778" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>Web</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.29424778" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Python 2.7.10 (/usr/bin/python) interpreter library</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.29424778" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.29424778" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>AmazonDataSystemV2</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.29424778" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Maven: aopalliance:aopalliance:1.0</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.29424778" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.19296482" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
