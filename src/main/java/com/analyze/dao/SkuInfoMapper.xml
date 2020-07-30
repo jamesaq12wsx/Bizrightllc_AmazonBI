@@ -120,7 +120,7 @@
   	 SELECT DISTINCT compareOurAsin FROM [dbo].[skuInfo] WHERE asin = #{asin}
   </select>
    <select id="search_price" >
-	SELECT top 1  si.insertTime,si.sku_price FROM skuCommonInfo si where si.asin=#{0} ORDER BY si.insertTime DESC;
+	SELECT top 1  si.insertTime,si.sku_price FROM skuCommonInfo si where si.asin=#{arg0} ORDER BY si.insertTime DESC;
    </select>
 
     <!-- 查询商品产品线信息 -->
@@ -287,7 +287,7 @@
   </select>
   
   <select id="getAsinMe_price" resultType="Map">
-  	 SELECT top 1si.asin,si.sku_price FROM skuCommonInfo si where si.asin=#{0} ORDER BY si.insertTime DESC;
+  	 SELECT top 1si.asin,si.sku_price FROM skuCommonInfo si where si.asin=#{arg0} ORDER BY si.insertTime DESC;
   </select>
   
   <select id="getCategoryInfo" resultType="Map" parameterType="java.util.Map">
