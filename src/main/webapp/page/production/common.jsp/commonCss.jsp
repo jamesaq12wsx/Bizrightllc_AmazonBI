@@ -11,6 +11,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="<%=path %>/page/production/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <link href="<%=path %>/page/production/vendors/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="<%=path %>/page/production/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <%--input spinner--%>
+    <link href="<%=path %>/page/production/vendors/bootstrap-touchspin/src/jquery.bootstrap-touchspin.css" rel="stylesheet">
     <!-- 阿里矢量 -->
     <link rel="stylesheet" href="http:////at.alicdn.com/t/font_980160_vzsbrovbpzr.css">
     <link rel="stylesheet" href="<%=path %>/page/production/css/magic-check.css">

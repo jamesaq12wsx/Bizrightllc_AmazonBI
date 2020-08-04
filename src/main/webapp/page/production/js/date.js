@@ -249,22 +249,33 @@ function init_daterangepicker_single_call() {
 	if (typeof ($.fn.daterangepicker) === 'undefined') {
 		return;
 	}
-	
+
 	$('.mydate_single').each(function(){
 		var obj = $(this);
-		
-		$(obj).daterangepicker({
-			singleDatePicker : true,
-			singleClasses : "",
-			maxDate : moment(),
-		}, function(start, end, label) {
-			$(this).change();
-		});
-		
-		$(obj).val(moment().subtract(1, 'days').format('MM/DD/YYYY'));//默认昨天日期	
-		
-	})
 
+		$(obj).daterangepicker({
+			singleDatePicker: true,
+			autoUpdateInput: false,
+			showDropdowns: true,
+			minYear: 1753,
+			maxYear: parseInt(moment().format('YYYY'),10)
+		}, function(start, end, label) {
+			$(obj).val(start.format('YYYY-MM-DD'));
+		});
+
+		// $(obj).daterangepicker({
+		// 	singleDatePicker : true,
+		// 	locale:{
+		// 		format: "YYYY-MM-DD"
+		// 	}
+		// }, function(start, end, label) {
+		// 	$(this).change();
+		// });
+	//
+	// 	//默认昨天日期
+	// 	$(obj).val(moment().subtract(1, 'days').format('YYYY-MM-DD'));
+	//
+	})
 }
 
 function init_daterangepicker_reservation() {

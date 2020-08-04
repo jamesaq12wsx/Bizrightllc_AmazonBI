@@ -54,6 +54,7 @@ $(".nav").append('<li>\
         <span>监控总览</span>\
         <ul>\
           <li><a href="'+path+'/c_skuManage.htm"><i class="iconfont icon-Icon7"></i>SKU监控</a></li>\
+          <li><a href="'+path+'/c_Promotion.htm"><i class="iconfont icon-Group1"></i>Promotion監控</a></li>\
           <li><a href="'+path+'/c_PriceChange.htm"><i class="iconfont icon-Group1"></i>Price Change</a></li>\
           <li><a href="'+path+'/c_TitleChange.htm"><i class="iconfont icon-Icon4"></i>Title Change</a></li>\
           <li><a href="'+path+'/c_RankingChange.htm"><i class="iconfont icon-Icon10"></i>Ranking Change</a></li>\

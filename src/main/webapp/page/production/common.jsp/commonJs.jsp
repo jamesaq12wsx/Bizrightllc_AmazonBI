@@ -23,6 +23,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=path %>/page/production/vendors/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
     <script src="<%=path %>/page/production/vendors/bootstrap-datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="<%=path %>/page/production/js/date.js"></script>
+    <%--  bootstrap input spinner  --%>
+    <script src="<%=path %>/page/production/vendors/bootstrap-touchspin/src/jquery.bootstrap-touchspin.js"></script>
     <!-- echarttu  -->
     <script src="<%=path %>/page/production/js/Echarts/echarts.min.js"></script>
     <script src="<%=path %>/page/production/js/Echarts/shine.js"></script>
