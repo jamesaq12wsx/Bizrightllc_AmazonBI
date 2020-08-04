@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analyze.dao.PromotionSettingDOMapper">
+    <resultMap id="BaseResultMap" type="com.analyze.model.PromotionSettingDO">
+        <id column="Id" jdbcType="BIGINT" property="id"/>
+        <result column="PromotionId" jdbcType="BIGINT" property="promotionId"/>
+        <result column="Asin" jdbcType="VARCHAR" property="asin"/>
+        <result column="Price" jdbcType="NUMERIC" property="price"/>
+        <result column="Funding" jdbcType="NUMERIC" property="funding"/>
+        <result column="CreatedBy" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="UpdateBy" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="CreatedAt" jdbcType="DATE" property="createdAt"/>
+        <result column="UpdatedAt" jdbcType="DATE" property="updatedAt"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        Id, PromotionId, Asin, Price, Funding, CreatedBy ,UpdatedBy, CreatedAt, UpdatedAt
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select *
+        from PromotionSetting
+    </select>
+
+    <select id="existById" parameterType="java.lang.Long" resultType="java.lang.Boolean">
+        SELECT count(*) FROM PromotionSetting WHERE Id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from PromotionSetting
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="existByPromotionIdAndAsin" resultType="java.lang.Boolean">
+        select count(*) from PromotionSetting where PromotionId = #{promotionId, jdbcType=BIGINT} and Asin = #{asin, jdbcType=VARCHAR}
+    </select>
+
+    <select id="findByPromotionId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from PromotionSetting
+        where PromotionId = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="findByPromotionIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        select *
+        from PromotionSetting
+        where PromotionId in
+        <foreach item="promotionId" collection="promotionIds" separator="," open="(" close=")">
+            #{promotionId}
+        </foreach>
+    </select>
+
+    <select id="findByPromotionIdAndAsin" resultMap="BaseResultMap">
+        select *
+        from PromotionSetting
+        where PromotionId = #{promotionId, jdbcType=BIGINT} and Asin = #{asin, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.analyze.model.PromotionSettingDO">
+        insert into PromotionSetting (PromotionId,Asin,Price,Funding,CreatedBy,UpdatedBy,CreatedAt,UpdatedAt)
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <choose>
+                <when test="promotionId == null">
+                    0,
+                </when>
+                <otherwise>
+                    #{promotionId,jdbcType=BIGINT},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="asin == null">
+                    '',
+                </when>
+                <otherwise>
+                    #{asin,jdbcType=VARCHAR},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="price == null">
+                    0.00,
+                </when>
+                <otherwise>
+                    #{price,jdbcType=DECIMAL},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="funding == null">
+                    0.00,
+                </when>
+                <otherwise>
+                    #{funding,jdbcType=DECIMAL},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="createdBy == null">
+                    '',
+                </when>
+                <otherwise>
+                    #{createdBy,jdbcType=VARCHAR},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="updatedBy == null">
+                    '',
+                </when>
+                <otherwise>
+                    #{updatedBy,jdbcType=VARCHAR},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="createdAt == null">
+                    getdate(),
+                </when>
+                <otherwise>
+                    #{createdAt,jdbcType=VARCHAR},
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="updatedAt == null">
+                    getdate()
+                </when>
+                <otherwise>
+                    #{updatedAt,jdbcType=VARCHAR},
+                </otherwise>
+            </choose>
+        </trim>
+    </insert>
+
+    <update id="updatePromotion" parameterType="com.analyze.model.PromotionSettingDO">
+        update PromotionSetting
+        set
+        <if test="promotionId != null">
+            PromotionId = #{promotionId, jdbcType=BIGINT},
+        </if>
+        <if test="asin != null">
+            Asin = #{asin, jdbcType=NVARCHAR},
+        </if>
+        <if test="price != null">
+            Price = cast( #{price, jdbcType=NUMERIC} as money),
+        </if>
+        <if test="funding != null">
+            Funding = cast( #{funding, jdbcType=NUMERIC} as money),
+        </if>
+        <if test="updatedBy != null">
+            UpdatedBy = #{updatedBy, jdbcType=NVARCHAR},
+        </if>
+        updatedAt = getdate()
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        delete
+        from PromotionSetting
+        where Id = #{id, jdbcType= BIGINT}
+    </delete>
+
+</mapper>

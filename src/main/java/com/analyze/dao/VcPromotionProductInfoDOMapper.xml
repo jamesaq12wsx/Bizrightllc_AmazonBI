@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analyze.dao.VcPromotionProductInfoDOMapper">
+  <resultMap id="BaseResultMap" type="com.analyze.model.VcPromotionProductInfoDO">
+    <result column="CrawId" jdbcType="VARCHAR" property="crawId" />
+    <result column="PromotionId" jdbcType="VARCHAR" property="promotionId" />
+    <result column="ProductName" jdbcType="VARCHAR" property="productName" />
+    <result column="Upc" jdbcType="VARCHAR" property="upc" />
+    <result column="AmazonPriceStr" jdbcType="VARCHAR" property="amazonPriceStr" />
+    <result column="AmazonPrice" jdbcType="DECIMAL" property="amazonPrice" />
+    <result column="WebsitePriceStr" jdbcType="VARCHAR" property="websitePriceStr" />
+    <result column="WebsitePrice" jdbcType="DECIMAL" property="websitePrice" />
+    <result column="FundingStr" jdbcType="VARCHAR" property="fundingStr" />
+    <result column="Funding" jdbcType="DECIMAL" property="funding" />
+    <result column="LikelyPriceStr" jdbcType="VARCHAR" property="likelyPriceStr" />
+    <result column="LikelyPrice" jdbcType="DECIMAL" property="likelyPrice" />
+    <result column="UnitsSoldStr" jdbcType="VARCHAR" property="unitsSoldStr" />
+    <result column="UnitsSold" jdbcType="INTEGER" property="unitsSold" />
+    <result column="amount_spent" jdbcType="VARCHAR" property="amountSpent" />
+    <result column="RevenueStr" jdbcType="VARCHAR" property="revenueStr" />
+    <result column="Revenue" jdbcType="DECIMAL" property="revenue" />
+    <result column="craw_flg" jdbcType="VARCHAR" property="crawFlg" />
+    <result column="asin" jdbcType="VARCHAR" property="asin" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CrawId, PromotionId, ProductName, Upc, AmazonPriceStr, AmazonPrice, WebsitePriceStr, WebsitePrice, FundingStr, Funding,
+    LikelyPriceStr, LikelyPrice, UnitsSoldStr, UnitsSold, AmountSpentStr, AmountSpent, RevenueStr, Revenue, CrawFlg, Asin
+  </sql>
+
+</mapper>
