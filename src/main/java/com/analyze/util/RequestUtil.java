@@ -4,6 +4,8 @@
 package com.analyze.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,7 +25,14 @@ public class RequestUtil {
 	private static final Base64 base64 = new Base64(true);
 	public static final String LAST_PAGE = "com.alibaba.lastPage";
     public static final String REDIRECT_HOME = "/";
-    
+
+    protected static final String STATUS = "status";
+
+    protected static final String SUCCESS = "1";
+
+    protected static final String FAIL = "0";
+
+    protected static final String MSG = "msg";
     
     /**
      * 获取当前Request对象.
@@ -111,5 +120,26 @@ public class RequestUtil {
             //this does not happen
             return null;
         }
+    }
+
+    public static Map<String,Object> createSuccessResponse(Object data){
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        resultMap.put("data", data);
+        resultMap.put(STATUS, SUCCESS);
+
+        return resultMap;
+
+    }
+
+    public static Map<String, Object> createFailResponse(Exception e){
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        resultMap.put(STATUS, FAIL);
+        resultMap.put(MSG, e.getMessage());
+
+        return resultMap;
     }
 }
