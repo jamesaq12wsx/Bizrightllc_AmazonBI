@@ -12,7 +12,7 @@
 
     <style>
 
-        tr{
+        tr {
             height: 50px;
         }
 
@@ -80,6 +80,27 @@
                 </div>
 
                 <div class="row">
+                    <h5>Created On Range</h5>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                        <label for="createdOnFrom" class="col-lg-2">From</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control mydate_single" id="createdOnFrom"
+                                   placeholder="Created On From">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                        <label for="createdOnTo" class="col-lg-2">To</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control mydate_single" id="createdOnTo"
+                                   placeholder="Created On To">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <h5>Start Date Range</h5>
                 </div>
 
@@ -122,7 +143,9 @@
                 </div>
 
                 <div class="row">
-                    <button type="button" id="searchBtn" class="btn btn-primary" onclick="searchVcPromotionOnClick()">Search</button>
+                    <button type="button" id="searchBtn" class="btn btn-primary" onclick="searchVcPromotionOnClick()">
+                        Search
+                    </button>
                 </div>
 
             </form>
@@ -136,11 +159,14 @@
         更新时间：<span id="inserttime"></span>
     </div>
     <h1>VC Promotion</h1>
+    <button id="newSettingBtn" class="btn btn-primary btn-sm pull-right">New Setting</button>
     <table class="table" id="table" style="width: 100%">
         <thead>
         <tr>
             <th style="width: 5%;"></th>
+            <th style="width: 5%;">Check</th>
             <th style="width: 9%;">Promotion Id</th>
+            <th style="width: 9%;">Sku</th>
             <th style="width: 9%">Status</th>
             <th style="width: 9%;">Type</th>
             <th style="width: 9%;">Vendor Code</th>

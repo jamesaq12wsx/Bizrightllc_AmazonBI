@@ -2,6 +2,12 @@ let vcPromotions = [];
 let promotionSettings = [];
 let checkingPromotionSetting = null;
 
+const checkStatus = {
+    NO_SETTING: 'summer',
+    NEED_ATTENTION: 'winter',
+    SAFE: 'safe',
+}
+
 // fetch vc promotion and promotion setting
 function searchVcPromotionOnClick() {
     let searchCriteria = getSearchCriteria();
@@ -56,72 +62,12 @@ function searchVcPromotionOnClick() {
             }
         }, (err) => {
             console.error("Fetch vc promotion failed", err);
+            closeLoading();
 
             vcPromotions = [];
             promotionSettings = [];
-        }, function() {
+        }, function () {
             closeLoading();
-
-            // $("#table").dataTable().fnDestroy();
-            //
-            // let table = $('#table').DataTable({
-            //     pageLength: 20,
-            //     data: $.grep(data.data, function (n, i) {
-            //         return n.promotionId !== null && n.promotionId !== 'undefined'
-            //     }),
-            //     rowCallback: function (nRow, rowData, index) {
-            //         if (promotionSettings.filter(s => s.promotionId.toString() === rowData.promotionId.toString()).length > 0) {
-            //
-            //             let settings = promotionSettings.filter(s => s.promotionId.toString() === rowData.promotionId.toString());
-            //
-            //             let needAttention = false;
-            //
-            //             // check price and funding for each product
-            //             $.each(rowData.products, function (index, p) {
-            //                 if (settings.find(s => s.asin.toString() === p.asin.toString() && ((p.websitePrice - p.funding) > (s.price - s.funding)))) {
-            //                     needAttention = true;
-            //                 }
-            //             });
-            //
-            //             if (needAttention) {
-            //                 $('td', nRow).css('background-color', 'Pink');
-            //             }
-            //         }
-            //     },
-            //     columns: [
-            //         {
-            //             "className": 'details-control',
-            //             "orderable": false,
-            //             "data": null,
-            //             "defaultContent": '<span class="addIcon"><i class="iconfont icon-jia"></i></i></span>',
-            //         },
-            //         {"data": "promotionId"},
-            //         {"data": "status"},
-            //         {"data": "type"},
-            //         {"data": "vendorCode"},
-            //         {"data": "marketPlace"},
-            //         {"data": "createdOn"},
-            //         {"data": "startDate"},
-            //         {"data": "endDate"},
-            //         {"data": "insertAt"},
-            //     ],
-            //     // "order": [[1, 'asc']]
-            // });
-            //
-            // $('#table tbody').on('click', 'td.details-control', function () {
-            //     var tr = $(this).closest('tr');
-            //     var row = table.row(tr);
-            //
-            //     if (row.child.isShown()) {
-            //         // This row is already open - close it
-            //         row.child.hide();
-            //         tr.removeClass('shown');
-            //     } else {
-            //         // Open this row
-            //         row.child(formatDetail(row.data())).show();
-            //         tr.addClass('shown');
-            //     }
-            // });
         });
 
 }
@@ -172,38 +118,50 @@ function fetchSettings(promotionIds, successCb, errorCb, completeCb) {
     }
 }
 
-// On modal close
-$('#promotionModal').on('hidden.bs.modal', function () {
-    // do something…
-    checkingPromotionSetting = null;
-    clearModalInput();
-});
-
 //Redraw table
 function reDraw() {
+
+    vcPromotions.forEach(p => {
+        if (promotionSettings.filter(s => s.promotionId.toString() === p.promotionId.toString()).length > 0) {
+
+            let settings = promotionSettings.filter(s => s.promotionId.toString() === p.promotionId.toString());
+
+            let needAttention = false;
+
+            // check price and funding for each product
+            $.each(p.products, function (index, product) {
+
+                let s = settings.find(s => s.asin.toString() === product.asin.toString());
+
+                if (s){
+                    if ((product.websitePrice - product.funding) > (s.price - s.funding)){
+                        p.needAttention = checkStatus.NEED_ATTENTION;
+                    }else{
+                        p.needAttention = checkStatus.SAFE;
+                    }
+                }else{
+                    p.needAttention = checkStatus.NO_SETTING;
+                }
+
+            });
+
+        }else{
+            p.needAttention = checkStatus.NO_SETTING;
+        }
+    });
+
     $("#table").dataTable().fnDestroy();
 
     let table = $('#table').DataTable({
         pageLength: 20,
         data: vcPromotions,
+        order: [[ 1, "desc" ]],
         rowCallback: function (nRow, rowData, index) {
-            if (promotionSettings.filter(s => s.promotionId.toString() === rowData.promotionId.toString()).length > 0) {
 
-                let settings = promotionSettings.filter(s => s.promotionId.toString() === rowData.promotionId.toString());
-
-                let needAttention = false;
-
-                // check price and funding for each product
-                $.each(rowData.products, function (index, p) {
-                    if (settings.find(s => s.asin.toString() === p.asin.toString() && ((p.websitePrice - p.funding) > (s.price - s.funding)))) {
-                        needAttention = true;
-                    }
-                });
-
-                if (needAttention) {
-                    $('td', nRow).css('background-color', 'Pink');
-                }
+            if(rowData.needAttention === checkStatus.NEED_ATTENTION){
+                $('td', nRow).css('background-color', 'Pink');
             }
+
         },
         columns: [
             {
@@ -212,7 +170,34 @@ function reDraw() {
                 "data": null,
                 "defaultContent": '<span class="addIcon"><i class="iconfont icon-jia"></i></i></span>',
             },
+            {
+                data: 'needAttention',
+                render: function (data, type, row, meta) {
+                    // return data ? '<span class="starIcon glyphicon glyphicon-star">Check</span>' : '<span class="checkIcon glyphicon glyphicon-check"></span>';
+                    switch (data) {
+                        case checkStatus.NO_SETTING:
+                            return '';
+                        case checkStatus.NEED_ATTENTION:
+                            return '<span class="starIcon glyphicon glyphicon-star"></span>Check';
+                        case checkStatus.SAFE:
+                            return '<span class="checkIcon glyphicon glyphicon-check"></span>Safe';
+                        default:
+                            return '';
+                    }
+                }
+            },
             {"data": "promotionId"},
+            {
+                data: 'products',
+                render: function (data, type, row, meta) {
+                    // console.log(data);
+                    let productSkusStr = data.map(p => p.asinSkuMap ? p.asinSkuMap.sku : '').filter(sku => sku !== '').join(',');
+
+                    return productSkusStr.length > 20 ?
+                        '<span title="'+productSkusStr+'">'+productSkusStr.substr( 0, 20 )+'...</span>' :
+                        productSkusStr;
+                }
+            },
             {"data": "status"},
             {"data": "type"},
             {"data": "vendorCode"},
@@ -226,6 +211,7 @@ function reDraw() {
     });
 
     // Apply the search
+    // TODO:
     // table.columns().every( function () {
     //     var that = this;
     //
@@ -254,6 +240,13 @@ function reDraw() {
     });
 }
 
+// On modal close
+$('#promotionModal').on('hidden.bs.modal', function () {
+    // do something…
+    checkingPromotionSetting = null;
+    clearModalInput();
+});
+
 function clearModalInput() {
     $('#idInput').val(null);
     $('#promotionIdInput').val(null);
@@ -270,15 +263,15 @@ function modalClickHandler(e) {
     let asin = $(e).data('asin');
 
     //exist setting
-    if(settingId){
+    if (settingId) {
         checkingPromotionSetting = promotionSettings.find(s => s.id === settingId);
-    }else{
+    } else {
         // new setting
         checkingPromotionSetting = {};
-        if(promotionId){
+        if (promotionId) {
             checkingPromotionSetting.promotionId = promotionId;
         }
-        if(asin){
+        if (asin) {
             checkingPromotionSetting.asin = asin;
         }
     }
@@ -407,6 +400,9 @@ function getSearchCriteria() {
     let asin = $('#asin').val().trim();
     let status = $('#status').val().trim();
 
+    let createdOnFrom = $('#createdOnFrom').val().trim();
+    let createdOnTo = $('#createdOnTo').val().trim();
+
     let startDateFrom = $('#startDateFrom').val().trim();
     let startDateTo = $('#startDateTo').val().trim();
 
@@ -425,6 +421,14 @@ function getSearchCriteria() {
 
     if (status && status !== '') {
         returnObj.status = status;
+    }
+
+    if (createdOnFrom && createdOnFrom !== '') {
+        returnObj.createdOnFrom = createdOnFrom;
+    }
+
+    if (createdOnTo && createdOnTo !== '') {
+        returnObj.createdOnTo = createdOnTo;
     }
 
     if (startDateFrom && startDateFrom !== '') {
@@ -643,10 +647,10 @@ function deleteSettingErrorHandler(err) {
     console.error(err);
 }
 
-function reFetchSetting(){
+function reFetchSetting() {
     showLoading();
     fetchSettings(vcPromotions.filter(p => p.promotionId !== null).map(p => p.promotionId),
-        (value)=>{
+        (value) => {
             let settingResponse = JSON.parse(value);
             console.log('Promotion setting', value);
             if (settingResponse.status == '1') {
@@ -664,6 +668,12 @@ function reFetchSetting(){
         }, () => {
             closeLoading();
         });
+}
+
+function newSettingBtnOnClick(){
+    checkingPromotionSetting = {};
+
+    openPromotionSettingModal();
 }
 
 function init() {
@@ -688,6 +698,8 @@ function init() {
         boostat: 10,
         maxboostedstep: 10,
     });
+
+    $('#newSettingBtn').click(newSettingBtnOnClick);
 }
 
 $(document).ready(init);

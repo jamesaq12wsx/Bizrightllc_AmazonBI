@@ -51,4 +51,6 @@ public class VcPromotionProductInfoDO {
 
     private String crawFlg;
 
+    private AsinSkuMapDO asinSkuMap;
+
 }

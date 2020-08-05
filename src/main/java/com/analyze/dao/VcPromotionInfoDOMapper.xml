@@ -35,7 +35,7 @@
         <result column="FundingAgreement" jdbcType="VARCHAR" property="fundingAgreement"/>
         <result column="MerchandisingFee" jdbcType="VARCHAR" property="merchandisingFee"/>
         <result column="CrawFlg" jdbcType="VARCHAR" property="crawFlg"/>
-        <result column="InsertAt" jdbcType="TIMESTAMP" property="insertAt" />
+        <result column="InsertAt" jdbcType="TIMESTAMP" property="insertAt"/>
 
         <collection property="products" ofType="com.analyze.model.VcPromotionProductInfoDO">
             <result column="CrawId" jdbcType="VARCHAR" property="crawId"/>
@@ -58,6 +58,10 @@
             <result column="Revenue" jdbcType="DECIMAL" property="revenue"/>
             <result column="craw_flg" jdbcType="VARCHAR" property="crawFlg"/>
             <result column="asin" jdbcType="VARCHAR" property="asin"/>
+
+            <!-- One-on-one:  -->
+            <association property="asinSkuMap" column="asin" javaType="com.analyze.model.AsinSkuMapDO"
+                         select="com.analyze.dao.AsinSkuMapDOMapper.findByAsin"/>
         </collection>
 
     </resultMap>
@@ -79,21 +83,30 @@
     </select>
 
     <select id="findAllLastCrawWithProductInfo" resultMap="promotionWithProductResultMap">
-        select *
+
+        select p.*, pp.*
         from VcPromotionInfo p
-                 left JOIN VcPromotionProductInfo pp on p.CrawId = pp.CrawId and p.PromotionId = pp.PromotionId
-        where p.CrawId = (select max(cast(CrawId as BIGINT)) from VcPromotionInfo)
+                 RIGHT join (select p.PromotionId, MAX(p.InsertAt) as LastInsertAt
+                             from VcPromotionInfo p
+                             where PromotionId is not null
+                               and PromotionId != ''
+                             GROUP BY p.PromotionId) pi
+                            on p.PromotionId = pi.PromotionId and p.InsertAt = pi.LastInsertAt
+                 join VcPromotionProductInfo pp on p.CrawId = pp.CrawId and p.PromotionId = pp.PromotionId
     </select>
 
     <select id="findLastCrawPromotionWithCriteria" resultMap="promotionWithProductResultMap"
             parameterType="com.analyze.dto.request.VcPromotionSearchCriteria">
-        select *
+        select p.*, pp.*
         from VcPromotionInfo p
-        left JOIN VcPromotionProductInfo pp on p.CrawId = pp.CrawId and p.PromotionId = pp.PromotionId
+        RIGHT join (select p.PromotionId, MAX(p.InsertAt) as LastInsertAt
+                    from VcPromotionInfo p
+                    where PromotionId is not null
+                    and PromotionId != ''
+                    GROUP BY p.PromotionId) pi
+                on p.PromotionId = pi.PromotionId and p.InsertAt = pi.LastInsertAt
+        join VcPromotionProductInfo pp on p.CrawId = pp.CrawId and p.PromotionId = pp.PromotionId
         where 1=1
-        and p.CrawId = (select max(cast(CrawId as BIGINT)) from VcPromotionInfo)
-        and p.PromotionId is not null
-        and p.PromotionId != ''
         <if test="promotionId != null and promotionId != ''">
             and p.PromotionId = #{promotionId, jdbcType=VARCHAR}
         </if>
@@ -114,6 +127,12 @@
         </if>
         <if test="endDateTo != null">
             and <![CDATA[ convert(date, p.EndDate) <= ]]> #{endDateTo, jdbcType=TIMESTAMP}
+        </if>
+        <if test="createdOnFrom != null">
+            and <![CDATA[ convert(date, p.CreatedOn) >= ]]>  #{createdOnFrom, jdbcType=TIMESTAMP}
+        </if>
+        <if test="createdOnTo != null">
+            and <![CDATA[ convert(date, p.CreatedOn) <= ]]> #{createdOnTo, jdbcType=TIMESTAMP}
         </if>
     </select>
 

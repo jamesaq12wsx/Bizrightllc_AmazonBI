@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -36,5 +37,7 @@ public class VcPromotionProductInfo {
     private BigDecimal revenue;
 
     private String crawFlg;
+
+    private AsinSkuMap asinSkuMap;
 
 }

@@ -44,4 +44,10 @@ public class VcPromotionSearchCriteria {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDateTo;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdOnFrom;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdOnTo;
+
 }
