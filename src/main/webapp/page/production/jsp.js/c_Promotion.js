@@ -122,11 +122,10 @@ function fetchSettings(promotionIds, successCb, errorCb, completeCb) {
 function reDraw() {
 
     vcPromotions.forEach(p => {
+        p.needAttention = null;
         if (promotionSettings.filter(s => s.promotionId.toString() === p.promotionId.toString()).length > 0) {
 
             let settings = promotionSettings.filter(s => s.promotionId.toString() === p.promotionId.toString());
-
-            let needAttention = false;
 
             // check price and funding for each product
             $.each(p.products, function (index, product) {
@@ -137,13 +136,17 @@ function reDraw() {
                     if ((product.websitePrice - product.funding) > (s.price - s.funding)){
                         p.needAttention = checkStatus.NEED_ATTENTION;
                     }else{
-                        p.needAttention = checkStatus.SAFE;
+                        if(p.needAttention !== checkStatus.NEED_ATTENTION){
+                            p.needAttention = checkStatus.SAFE;
+                        }
                     }
-                }else{
-                    p.needAttention = checkStatus.NO_SETTING;
                 }
 
             });
+
+            if(p.needAttention !== checkStatus.NEED_ATTENTION && p.needAttention !== checkStatus.SAFE){
+                p.needAttention = checkStatus.NO_SETTING;
+            }
 
         }else{
             p.needAttention = checkStatus.NO_SETTING;
