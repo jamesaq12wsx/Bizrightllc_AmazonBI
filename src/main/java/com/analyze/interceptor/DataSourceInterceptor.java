@@ -23,8 +23,9 @@ public class DataSourceInterceptor implements MethodBeforeAdvice, AfterReturning
 	/*public static final String dataSourceCraw = "dataSourceCraw";
 	public static final String dataSourceGongJuXiang = "dataSourceGongJuXiang";*/
 
-	@Autowired
-	private HttpServletRequest request;// 注入request对象
+	// 注入request对象
+//	@Autowired
+//	private HttpServletRequest request;
 
 	/**
 	 * 每次执行service方法前都会调用before这个方法，判断需要选择哪个数据源
