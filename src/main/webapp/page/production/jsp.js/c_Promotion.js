@@ -3,10 +3,17 @@ let promotionSettings = [];
 let checkingPromotionSetting = null;
 
 const checkStatus = {
-    NO_SETTING: 'summer',
-    NEED_ATTENTION: 'winter',
+    NO_SETTING: 'noSetting',
+    HAVE_SETTING: 'haveSetting',
+    NEED_ATTENTION: 'needAttention',
+    CHECK_PRICE: 'checkPrice',
     SAFE: 'safe',
 }
+
+const vcPromoStatus = {
+    APPROVED: 'Approved',
+    APPROVED_AND_RUNNING: 'Approved and running',
+};
 
 // fetch vc promotion and promotion setting
 function searchVcPromotionOnClick() {
@@ -123,6 +130,11 @@ function reDraw() {
 
     vcPromotions.forEach(p => {
         p.needAttention = null;
+
+        if (p.status === 'Needs your attention'){
+            p.needAttention = checkStatus.NEED_ATTENTION;
+        }
+
         if (promotionSettings.filter(s => s.promotionId.toString() === p.promotionId.toString()).length > 0) {
 
             let settings = promotionSettings.filter(s => s.promotionId.toString() === p.promotionId.toString());
@@ -133,18 +145,25 @@ function reDraw() {
                 let s = settings.find(s => s.asin.toString() === product.asin.toString());
 
                 if (s){
-                    if ((product.websitePrice - product.funding) > (s.price - s.funding)){
-                        p.needAttention = checkStatus.NEED_ATTENTION;
-                    }else{
-                        if(p.needAttention !== checkStatus.NEED_ATTENTION){
-                            p.needAttention = checkStatus.SAFE;
+                    p.needAttention = checkStatus.HAVE_SETTING;
+
+                    // check promo is approved
+                    if (p.status === vcPromoStatus.APPROVED || p.status === vcPromoStatus.APPROVED_AND_RUNNING){
+                        // check if today is in the promo time range
+                        if ( moment().isSameOrAfter(p.startDate, 'day') && moment().isSameOrBefore(p.endDate, 'day')){
+                            if ((product.websitePrice - product.funding) > (s.price - s.funding)){
+                                p.needAttention = checkStatus.CHECK_PRICE;
+                            }else{
+                                if(p.needAttention !== checkStatus.NEED_ATTENTION){
+                                    p.needAttention = checkStatus.SAFE;
+                                }
+                            }
                         }
                     }
                 }
-
             });
 
-            if(p.needAttention !== checkStatus.NEED_ATTENTION && p.needAttention !== checkStatus.SAFE){
+            if(p.needAttention === null){
                 p.needAttention = checkStatus.NO_SETTING;
             }
 
@@ -161,8 +180,10 @@ function reDraw() {
         order: [[ 1, "desc" ]],
         rowCallback: function (nRow, rowData, index) {
 
-            if(rowData.needAttention === checkStatus.NEED_ATTENTION){
+            if(rowData.needAttention === checkStatus.CHECK_PRICE){
                 $('td', nRow).css('background-color', 'Pink');
+            }else if (rowData.needAttention === checkStatus.NEED_ATTENTION){
+                $('td', nRow).css('background-color', 'Orange');
             }
 
         },
@@ -180,10 +201,14 @@ function reDraw() {
                     switch (data) {
                         case checkStatus.NO_SETTING:
                             return '';
+                        case checkStatus.HAVE_SETTING:
+                            return '<span class="checkIcon glyphicon glyphicon-ok"></span>Set';
+                        case checkStatus.CHECK_PRICE:
+                            return '<span class="checkIcon glyphicon glyphicon-exclamation-sign"></span>Check';
                         case checkStatus.NEED_ATTENTION:
-                            return '<span class="starIcon glyphicon glyphicon-star"></span>Check';
+                            return '<span class="attentionIcon glyphicon glyphicon-exclamation-sign"></span>Attention';
                         case checkStatus.SAFE:
-                            return '<span class="checkIcon glyphicon glyphicon-check"></span>Safe';
+                            return '<span class="safeIcon glyphicon glyphicon-ok-circle"></span>Safe';
                         default:
                             return '';
                     }
@@ -348,11 +373,17 @@ function formatDetail(promotion) {
                 `<button class="btn btn-info btn-sm addPromotionSettingBtn" data-setting="${null}" data-promotionId="${promotionId}" data-asin="${asin}" onclick="modalClickHandler(this)">Add</button>`;
 
             // check crawl data and setting data
-            const needAttention = findSetting ?
-                (data.websitePrice - data.funding) > (findSetting.price - findSetting.funding) :
-                false;
+            let needAttention = false;
 
-            console.log('Promotion product need attention', needAttention);
+            if (findSetting){
+                if(promotion.needAttention === checkStatus.CHECK_PRICE){
+                    if ((data.websitePrice - data.funding) > (findSetting.price - findSetting.funding)){
+                        needAttention = true;
+                    }
+                }
+            }
+
+            // console.log('Promotion product need attention', needAttention);
 
             table += `<tr style="${needAttention ? 'background-color: pink' : ''}">` +
                 `<td style="display: none">${promotion.promotionId}</td>` +
@@ -374,28 +405,6 @@ function formatDetail(promotion) {
     table += '</table>';
 
     return table;
-}
-
-function getAllPromotionSetting() {
-
-    console.log('Fetch promotion setting');
-
-    $.ajax({
-        url: path + '/promotion/setting/all.htm',
-        type: 'GET',
-        success: function (value) {
-            let data = JSON.parse(value);
-
-            console.log('return data', data);
-        },
-        fail: function (err) {
-            console.log('fetch promotion setting failed', err);
-        }
-    })
-}
-
-function getPromotionSetting(promotionId) {
-
 }
 
 function getSearchCriteria() {
