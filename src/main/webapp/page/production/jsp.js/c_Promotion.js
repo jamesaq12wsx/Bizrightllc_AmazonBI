@@ -387,7 +387,7 @@ function formatDetail(promotion) {
 
             table += `<tr style="${needAttention ? 'background-color: pink' : ''}">` +
                 `<td style="display: none">${promotion.promotionId}</td>` +
-                `<td>${data.asin}</td>` +
+                `<td><a href="${path+'/sku_buyBoxOffer.htm?asin='+ data.asin}" target="_blank" class="blue">${data.asin}</a></td>` +
                 `<td>${data.amazonPrice}</td>` +
                 `<td>${data.websitePrice}</td>` +
                 `<td>${data.funding}</td>` +
