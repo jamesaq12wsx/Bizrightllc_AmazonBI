@@ -99,7 +99,7 @@
             UpdatedBy = #{updatedBy, jdbcType=NUMERIC},
         </if>
         updatedAt = getdate()
-        where Id = #{id, jdbcType=INT}
+        where Id = #{id, jdbcType=INTEGER}
     </update>
 
 </mapper>

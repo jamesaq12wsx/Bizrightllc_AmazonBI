@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analyze.dao.PriceApiRequestDOMapper">
+    <resultMap id="BaseResultMap" type="com.analyze.model.PriceApiRequestDO">
+        <id column="RequestId" jdbcType="BIGINT" property="requestId"/>
+        <result column="JobId" jdbcType="VARCHAR" property="jobId"/>
+        <result column="Topic" jdbcType="VARCHAR" property="topic"/>
+        <result column="Status" jdbcType="VARCHAR" property="status"/>
+        <result column="Country" jdbcType="VARCHAR" property="country"/>
+        <result column="Source" jdbcType="VARCHAR" property="source"/>
+        <result column="MaxPages" jdbcType="INTEGER" property="maxPages"/>
+        <result column="Key" jdbcType="VARCHAR" property="key"/>
+        <result column="Values" jdbcType="VARCHAR" property="values"/>
+        <result column="CreatedBy" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="UpdateBy" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="CreatedAt" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="UpdatedAt" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+
+    <!--    <sql id="All_Column_List">-->
+    <!--        *-->
+    <!--    </sql>-->
+
+    <!--    <sql id="Base_Column_List">-->
+    <!--        RequestId, JobId, Topic, Status, Country, Source, MaxPages, Key, Values, CreatedBy ,UpdatedBy, CreatedAt, UpdatedAt-->
+    <!--    </sql>-->
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select *
+        from PriceApiRequest
+    </select>
+
+    <select id="existByRequestId" parameterType="java.lang.Long" resultType="java.lang.Boolean">
+        SELECT count(*)
+        FROM PriceApiRequest
+        WHERE RequestId = #{requestId, jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByRequestId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from PriceApiRequest
+        where RequestId = #{requestId, jdbcType=BIGINT}
+    </select>
+
+    <select id="findByTaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from PriceApiRequest
+        where TaskId = #{taskId, jdbcType=BIGINT}
+    </select>
+
+    <select id="findUnNewByTaskIds" parameterType="map" resultMap="BaseResultMap">
+        select *
+        from PriceApiRequest
+        where TaskId in
+        <choose>
+            <when test="taskIds.size() > 0">
+                <foreach collection="taskIds" item="taskId" index="index" open="(" separator="," close=")">
+                    #{taskId}
+                </foreach>
+            </when>
+            <otherwise>
+                ('')
+            </otherwise>
+        </choose>
+        and upper(Status) = 'CREATE'
+    </select>
+
+    <select id="findAllUnFinishedAndCanceled" resultMap="BaseResultMap">
+        select *
+        from PriceApiRequest
+        where upper(Status) != 'FINISHED'
+          and upper(Status) != 'CANCELED'
+          and upper(Status) != 'PROCESSING'
+    </select>
+
+    <!--  Not finished and canceled  -->
+    <select id="findRequestHaveNotFinished" resultMap="BaseResultMap">
+        select *
+        from PriceApiRequest
+        where upper(Status) != 'FINISHED'
+          and upper(Status) != 'CANCELED'
+          and upper(Status) != 'CREATE'
+          and upper(Status) != 'PROCESSING'
+          and TaskId in
+        <choose>
+            <when test="taskIds.size() > 0">
+                <foreach collection="taskIds" item="taskId" index="index" open="(" separator="," close=")">
+                    #{taskId}
+                </foreach>
+            </when>
+            <otherwise>
+                ('')
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert" parameterType="com.analyze.model.PriceApiRequestDO">
+        insert into PriceApiRequest
+
+        ("JobId", "TaskId", "Topic", "Status", "Country", "Source", "Key", "MaxPages", [Values], "CreatedBy",
+        "UpdatedBy", "CreatedAt", "UpdatedAt")
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <choose>
+                <when test="jobId != null">
+                    #{jobId, jdbcType=VARCHAR},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+            <if test="taskId != null">
+                #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="topic != null">
+                #{topic,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="key != null">
+                #{key,jdbcType=TIMESTAMP},
+            </if>
+            <if test="maxPages != null">
+                #{maxPages,jdbcType=INTEGER},
+            </if>
+            <if test="values != null">
+                #{values,jdbcType=VARCHAR},
+            </if>
+            #{createdBy, jdbcType=VARCHAR},
+            #{updatedBy, jdbcType=VARCHAR},
+            getdate(),
+            getdate()
+        </trim>
+    </insert>
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into PriceApiRequest
+        ("JobId", "TaskId", "Topic", "Status", "Country", "Source", "Key", "MaxPages", [Values], "CreatedBy",
+        "UpdatedBy", "CreatedAt", "UpdatedAt")
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <choose>
+                    <when test="item.jobId != null">
+                        #{item.jobId, jdbcType=VARCHAR},
+                    </when>
+                    <otherwise>
+                        '',
+                    </otherwise>
+                </choose>
+                <if test="item.taskId != null">
+                    #{item.taskId,jdbcType=VARCHAR},
+                </if>
+                <if test="item.topic != null">
+                    #{item.topic,jdbcType=VARCHAR},
+                </if>
+                <if test="item.status != null">
+                    #{item.status,jdbcType=VARCHAR},
+                </if>
+                <if test="item.country != null">
+                    #{item.country,jdbcType=VARCHAR},
+                </if>
+                <if test="item.source != null">
+                    #{item.source,jdbcType=VARCHAR},
+                </if>
+                <if test="item.key != null">
+                    #{item.key,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.maxPages != null">
+                    #{item.maxPages,jdbcType=INTEGER},
+                </if>
+                <if test="item.values != null">
+                    #{item.values,jdbcType=VARCHAR},
+                </if>
+                #{item.createdBy, jdbcType=VARCHAR},
+                #{item.updatedBy, jdbcType=VARCHAR},
+                getdate(),
+                getdate()
+            </trim>
+        </foreach>
+    </insert>
+
+    <update id="updatePriceApiRequest" parameterType="com.analyze.model.PriceApiRequestDO">
+        update PriceApiRequest
+        set
+        <if test="jobId != null">
+            JobId = #{jobId, jdbcType=NVARCHAR},
+        </if>
+        <if test="status != null">
+            Status = #{status, jdbcType=NVARCHAR},
+        </if>
+        UpdatedAt = getdate(),
+        UpdatedBy = #{updatedBy, jdbcType=NVARCHAR}
+
+        where RequestId = #{requestId, jdbcType=BIGINT}
+    </update>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="requestList" item="item" separator=";">
+            UPDATE PriceApiRequest
+            SET
+            <if test="item.jobId != null">
+                JobId = #{item.jobId, jdbcType=NVARCHAR},
+            </if>
+            <if test="item.status != null">
+                Status = #{item.status, jdbcType=NVARCHAR},
+            </if>
+            UpdatedAt = getdate()
+
+            WHERE RequestId = #{item.requestId, jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+</mapper>

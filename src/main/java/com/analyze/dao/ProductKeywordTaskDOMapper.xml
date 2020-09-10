@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analyze.dao.ProductKeywordTaskDOMapper">
+
+    <resultMap id="BaseResultMap" type="com.analyze.model.ProductKeywordTaskDO">
+        <result column="TaskId" jdbcType="VARCHAR" property="taskId"/>
+        <result column="TaskName" jdbcType="VARCHAR" property="taskName"/>
+        <result column="DownloadFilepath" jdbcType="VARCHAR" property="downloadFilepath"/>
+        <result column="DownloadFilename" jdbcType="VARCHAR" property="downloadFilename"/>
+        <result column="TaskStatus" jdbcType="VARCHAR" property="taskStatus"/>
+        <result column="Asins" jdbcType="VARCHAR" property="asins"/>
+        <result column="Keywords" jdbcType="VARCHAR" property="keywords"/>
+        <result column="CreatedBy" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="UpdatedBy" jdbcType="VARCHAR" property="updatedBy"/>
+        <result column="CreatedAt" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="UpdatedAt" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        TaskId, TaskName, DownloadFilePath, DownloadFilename, TaskStatus, Asins, Keywords, CreatedBy, UpdatedBy, CreatedAt, UpdatedAt
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select *
+        from ProductKeywordTask
+        order by CreatedAt
+    </select>
+
+    <select id="findAllByCreatedBy" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select *
+        from ProductKeywordTask
+        <if test="createdBy != null">
+            where CreatedBy = #{createdBy, jdbcType=VARCHAR}
+        </if>
+        order by CreatedAt
+    </select>
+
+    <!--  Return all non finished task  -->
+    <select id="findAllNonFinishTask" resultMap="BaseResultMap">
+        select *
+        from ProductKeywordTask
+        where TaskStatus != 'W'
+          and TaskStatus != 'S'
+          and TaskStatus != 'F'
+    </select>
+
+    <select id="findByTaskId" parameterType="map" resultMap="BaseResultMap">
+        select *
+        from ProductKeywordTask
+        where TaskId = #{taskId}
+    </select>
+
+    <select id="findAllSuccessTaskWithoutFile" resultMap="BaseResultMap">
+        select *
+        from ProductKeywordTask
+        where TaskStatus = 'S' and DownloadFilename = '' or DownloadFilename = null or DownloadFilepath = '' or DownloadFilepath = null
+    </select>
+
+    <insert id="insert" parameterType="com.analyze.model.ProductKeywordTaskDO">
+        insert into ProductKeywordTask
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                TaskId,
+            </if>
+            <if test="taskName != null">
+                TaskName,
+            </if>
+
+            DownloadFilepath,
+
+            DownloadFilename,
+
+            <if test="taskStatus != null">
+                TaskStatus,
+            </if>
+            <if test="asins != null">
+                Asins,
+            </if>
+            <if test="keywords != null">
+                Keywords,
+            </if>
+            CreatedBy,
+            UpdatedBy,
+            CreatedAt,
+            UpdatedAt
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="taskName != null">
+                #{taskName,jdbcType=VARCHAR},
+            </if>
+            <choose>
+                <when test="downloadFilepath != null">
+                    #{downloadFilepath,jdbcType=VARCHAR},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test="downloadFilename != null">
+                    #{downloadFilename,jdbcType=VARCHAR},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+
+            <if test="taskStatus != null">
+                #{taskStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="asins != null">
+                #{asins,jdbcType=VARCHAR},
+            </if>
+            <if test="keywords != null">
+                #{keywords,jdbcType=VARCHAR},
+            </if>
+            #{createdBy, jdbcType=VARCHAR},
+            #{updatedBy, jdbcType=VARCHAR},
+            getdate(),
+            getdate()
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.analyze.model.ProductKeywordTaskDO">
+        update ProductKeywordTask
+        set
+        <if test="downloadFilepath != null">
+            DownloadFilepath = #{downloadFilepath, jdbcType=NVARCHAR},
+        </if>
+        <if test="downloadFilename != null">
+            DownloadFilename = #{downloadFilename, jdbcType=NVARCHAR},
+        </if>
+        <if test="taskStatus != null">
+            TaskStatus = #{taskStatus, jdbcType=NVARCHAR},
+        </if>
+        UpdatedAt = getdate(),
+        UpdatedBy = #{updatedBy, jdbcType=NVARCHAR}
+
+        where TaskId = #{taskId, jdbcType=VARCHAR}
+    </update>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="taskList" item="item" separator=";">
+            UPDATE ProductKeywordTask
+            SET
+            <if test="item.downloadFilepath != null">
+                DownloadFilepath = #{item.downloadFilepath, jdbcType=NVARCHAR},
+            </if>
+            <if test="item.downloadFilename != null">
+                DownloadFilename = #{item.downloadFilename, jdbcType=NVARCHAR},
+            </if>
+            <if test="item.taskStatus != null">
+                TaskStatus = #{item.taskStatus, jdbcType=NVARCHAR},
+            </if>
+            UpdatedAt = getdate(),
+            UpdatedBy = #{item.updatedBy, jdbcType=NVARCHAR}
+            WHERE TaskId = #{item.taskId}
+        </foreach>
+    </update>
+
+</mapper>

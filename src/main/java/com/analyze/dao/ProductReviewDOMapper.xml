@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analyze.dao.ProductReviewDOMapper">
+    <resultMap id="BaseResultMap" type="com.analyze.model.ProductReviewDO">
+        <id column="Id" jdbcType="BIGINT" property="id"/>
+        <result column="TaskId" jdbcType="VARCHAR" property="taskId"></result>
+
+        <result column="ReviewId" jdbcType="VARCHAR" property="reviewId"></result>
+
+        <result column="Source" jdbcType="VARCHAR" property="source"></result>
+
+        <result column="Url" jdbcType="VARCHAR" property="URL"></result>
+
+        <result column="Country" jdbcType="VARCHAR" property="country"></result>
+
+        <result column="ProductId" jdbcType="VARCHAR" property="productId"></result>
+
+        <result column="Rating" jdbcType="INTEGER" property="rating"></result>
+
+        <result column="BrandName" jdbcType="VARCHAR" property="brandName"></result>
+
+        <result column="ProductName" jdbcType="VARCHAR" property="productName"></result>
+
+        <result column="ProductUrl" jdbcType="VARCHAR" property="productUrl"></result>
+
+        <result column="Date" jdbcType="TIMESTAMP" property="date"></result>
+
+        <result column="ReviewerId" jdbcType="VARCHAR" property="reviewerId"></result>
+
+        <result column="ReviewerName" jdbcType="VARCHAR" property="reviewerName"></result>
+
+        <result column="ReviewerUrl" jdbcType="VARCHAR" property="reviewerUrl"></result>
+
+        <result column="Title" jdbcType="VARCHAR" property="title"></result>
+
+        <result column="Comment" jdbcType="VARCHAR" property="comment"></result>
+
+        <result column="HelpfulCount" jdbcType="VARCHAR" property="helpfulCount"></result>
+
+        <result column="CommentCount" jdbcType="VARCHAR" property="commentCount"></result>
+
+        <result column="VerifiedPurchase" jdbcType="VARCHAR" property="verifiedPurchase"></result>
+
+        <result column="Page" jdbcType="INTEGER" property="page"></result>
+
+        <result column="Position" jdbcType="INTEGER" property="position"></result>
+
+        <result column="CreatedAt" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="UpdatedAt" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <!--    <sql id="Base_Column_List">-->
+    <!--        Id, TaskId, ReviewId, Source, Url, Country ,ProductId, CreatedAt, UpdatedAt-->
+    <!--    </sql>-->
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select *
+        from ProductReview
+    </select>
+
+    <select id="findAllByTaskId" parameterType="map" resultMap="BaseResultMap">
+        select *
+        from ProductReview
+        where TaskId = #{taskId}
+    </select>
+
+    <insert id="insert" parameterType="com.analyze.model.ProductReviewDO">
+        insert into ProductReview ("TaskId", "ReviewId", "Source", "Url", "Country", "ProductId", "Rating", "BrandName",
+                                   "ProductName", "ProductUrl", "Date", "ReviewerId", "ReviewerName", "ReviewerUrl",
+                                   "Title", "Comment", "HelpfulCount", "CommentCount", "VerifiedPurchase", "Page",
+                                   "Position", "CreatedAt", "UpdatedAt")
+        values (#{taskId}, #{reviewId}, #{source}, #{url}, #{country}, #{productId}, #{rating}, #{brandName},
+                #{productName}, #{productUrl}, #{date}, #{reviewerId}, #{reviewerName}, #{reviewerUrl}, #{title},
+                #{comment}, #{helpfulCount}, #{commentCount}, #{verifiedPurchase}, #{page}, #{position}, getdate(),
+                getdate());
+    </insert>
+
+    <update id="insertOrUpdate" parameterType="com.analyze.model.ProductReviewDO">
+        if exists (select * from ProductReview where
+        TaskId = #{taskId} and ReviewId = #{reviewId})
+        begin
+        update ProductReview
+        set "Source"           = #{source},
+            "Url"              = #{url},
+            "Country"          = #{country},
+            "ProductId"        = #{productId},
+            "Rating"           = #{rating},
+            "BrandName"        = #{brandName},
+            "ProductName"      = #{productName},
+            "ProductUrl"       = #{productUrl},
+            "Date"             = #{date},
+            "ReviewerId"       = #{reviewerId},
+            "ReviewerName"     = #{reviewerName},
+            "ReviewerUrl"      = #{reviewerUrl},
+            "Title"            = #{title},
+            "Comment"          = #{comment},
+            "HelpfulCount"     = #{helpfulCount},
+            "CommentCount"     = #{commentCount},
+            "VerifiedPurchase" = #{verifiedPurchase},
+            "Page"             = #{page},
+            "Position"         = #{position},
+            "UpdatedAt"        = getdate()
+        end
+            else
+        begin
+        insert into ProductReview ("TaskId", "ReviewId", "Source", "Url", "Country", "ProductId", "Rating", "BrandName",
+                                   "ProductName", "ProductUrl", "Date", "ReviewerId", "ReviewerName", "ReviewerUrl",
+                                   "Title", "Comment", "HelpfulCount", "CommentCount", "VerifiedPurchase", "Page",
+                                   "Position", "CreatedAt", "UpdatedAt")
+        values (#{taskId}, #{reviewId}, #{source}, #{url}, #{country}, #{productId}, #{rating}, #{brandName},
+                #{productName}, #{productUrl}, #{date}, #{reviewerId}, #{reviewerName}, #{reviewerUrl}, #{title},
+                #{comment}, #{helpfulCount}, #{commentCount}, #{verifiedPurchase}, #{page}, #{position}, getdate(),
+                getdate());
+        end
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into ProductReview
+        ("TaskId", "ReviewId", "Source", "Url", "Country", "ProductId", "Rating", "BrandName",
+        "ProductName", "ProductUrl", "Date", "ReviewerId", "ReviewerName", "ReviewerUrl",
+        "Title", "Comment", "HelpfulCount", "CommentCount", "VerifiedPurchase", "Page",
+        "Position", "CreatedAt", "UpdatedAt")
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                (#{item.taskId}, #{item.reviewId}, #{item.source}, #{item.url}, #{item.country}, #{item.productId},
+                #{item.rating}, #{item.brandName},
+                #{item.productName}, #{item.productUrl}, #{item.date}, #{item.reviewerId}, #{item.reviewerName},
+                #{item.reviewerUrl}, #{item.title},
+                #{item.comment}, #{item.helpfulCount}, #{item.commentCount}, #{item.verifiedPurchase}, #{item.page},
+                #{item.position}, getdate(),
+                getdate())
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="deleteById" parameterType="Long">
+        delete
+        from PromotionSetting
+        where Id = #{id, jdbcType= BIGINT}
+    </delete>
+
+</mapper>

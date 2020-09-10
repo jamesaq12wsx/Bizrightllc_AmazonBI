@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.config.JtaTransactionManagerFactoryBean;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -45,7 +47,8 @@ public class ModelMapperConfig {
         modelMapper.addConverter(toStringDate);
         modelMapper.getTypeMap(String.class, LocalDate.class).setProvider(localDateProvider);
 
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 
         return modelMapper;
     }

@@ -9,12 +9,20 @@ import com.analyze.cons.TaskSts;
 import com.analyze.dao.PromotionTaskDOMapper;
 import com.analyze.dao.SkuInfoMapper;
 import com.analyze.dao.SkuScrapyTaskDOMapper;
+import com.analyze.dto.ProductKeywordTask;
+import com.analyze.dto.ProductKeywordTaskResult;
+import com.analyze.dto.request.GetTaskResultRequest;
+import com.analyze.dto.request.NewProductKeywordTaskRequest;
+import com.analyze.dto.request.ProductKeywordSearchCriteria;
 import com.analyze.model.PromotionTaskDO;
 import com.analyze.model.SkuScrapyTaskDO;
 import com.analyze.service.HawProductService;
+import com.analyze.service.ProductKeywordTaskService;
 import com.analyze.service.ReportService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +66,13 @@ public class ReportController extends BaseController {
     @Autowired
     private PromotionTaskDOMapper promotionTaskDOMapper;
 
+    @Autowired
+    private ProductKeywordTaskService productKeywordTaskService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    //TODO: move config to file
     private final String uploadFilePath = "D:\\BIUploadFile\\";
 
 
@@ -457,6 +472,105 @@ public class ReportController extends BaseController {
         return resultMap;
     }
 
+    /**
+     * Get product keyword task
+     *
+     * At normal user only get the task they create
+     */
+    @RequestMapping(value = "/getProductKeywordTask", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getProductKeywordTask(HttpServletRequest request, HttpServletResponse response) {
+        if (log.isInfoEnabled()) {
+            log.info("==============> getProductKeywordTask");
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            Map<String, Object> paramMap = getRequestParams(request);
 
+            ProductKeywordSearchCriteria searchCriteria = modelMapper.map(paramMap, ProductKeywordSearchCriteria.class);
+
+            List<ProductKeywordTask> tasks = productKeywordTaskService.getTasksByCreatedUser(searchCriteria.getUserId());
+
+            resultMap.put("data", tasks);
+            resultMap.put(STATUS, SUCCESS);
+        } catch (Exception e) {
+            resultMap.put(STATUS, FAIL);
+            resultMap.put(MSG, e.getMessage());
+        }
+        return resultMap;
+    }
+
+    @RequestMapping(value = "/getProductKeywordTaskResult", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getProductKeywordTaskResult(HttpServletRequest request, HttpServletResponse response){
+        if (log.isInfoEnabled()) {
+            log.info("[Get product keyword task result]");
+        }
+
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            Map<String, Object> paramMap = getRequestParams(request);
+
+            GetTaskResultRequest requestBody = modelMapper.map(paramMap, GetTaskResultRequest.class);
+
+            if (StringUtils.isEmpty(requestBody.getTaskId())){
+                throw new IllegalArgumentException("Task id cannot be empty.");
+            }
+
+            ProductKeywordTaskResult result = productKeywordTaskService.getTaskResult(requestBody.getTaskId());
+
+            resultMap.put(STATUS, SUCCESS);
+            resultMap.put("data", result);
+
+        } catch (Exception e) {
+            resultMap.put(STATUS, FAIL);
+            resultMap.put(MSG, e.getMessage());
+        }
+        return resultMap;
+    }
+
+    /**
+     * Generate product review key word report
+     * Input products' asin, and key word,
+     * parse every keyword show in review
+     */
+    @RequestMapping(value = "/generateProductReviewKeywordTask", method = RequestMethod.POST)
+    @ResponseBody
+    public Object generateProductReviewKeywordTask(HttpServletRequest request, HttpServletResponse response) {
+        if (log.isInfoEnabled()) {
+            log.info("==============> generate product review keyword task");
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        PromotionTaskDO promotionTaskDO=new PromotionTaskDO();
+        try {
+            Map<String, Object> paramMap = getRequestParams(request);
+
+            NewProductKeywordTaskRequest requestBody = modelMapper.map(paramMap, NewProductKeywordTaskRequest.class);
+
+            log.info("promotionTaskDO=>[{}]",promotionTaskDO);
+
+            if (StringUtils.isEmpty(requestBody.getTaskName()) || StringUtils.isEmpty(requestBody.getAsins()) || StringUtils.isEmpty(requestBody.getKeywords())){
+                throw new IllegalArgumentException("Task name, asins and keywords cannot be empty.");
+            }
+
+            productKeywordTaskService.createNewTask(requestBody);
+
+            resultMap.put(STATUS, SUCCESS);
+
+            // 状态更改
+//            int result = promotionTaskDOMapper.insertSelective(promotionTaskDO);
+//            if (result == 1) {
+//                resultMap.put(STATUS, SUCCESS);
+//            } else {
+//                resultMap.put(STATUS, FAIL);
+//                resultMap.put(MSG, RespErrorEnum.GENERATE_TASK_ERROR.getSubStatusMsg());
+//                return resultMap;
+//            }
+        } catch (Exception e) {
+            resultMap.put(STATUS, FAIL);
+            resultMap.put(MSG, e.getMessage());
+        }
+        return resultMap;
+    }
 
 }

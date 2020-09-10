@@ -78,6 +78,7 @@ $(".nav").append('<li>\
             <li><a href="'+path+'/f_Report_WeeklyAndMonthlyOutbound.htm"><i class="iconfont icon-baobiao"></i>Outbound Report</a></li>\
             <li><a href="'+path+'/f_Report_HawProductInfo.htm"><i class="iconfont icon-baobiao"></i>HawProduct Report</a></li>\
             <li><a href="'+path+'/f_Report_Promotions.htm"><i class="iconfont icon-baobiao"></i>Promotion Report</a></li>\
+            <li><a href="'+path+'/f_Report_ProductKeyword.htm"><i class="iconfont icon-baobiao"></i>Product Keyword Report</a></li>\
           </ul>\
         </li>');
 $(".navSKU").append('<li><a class="logo" href="'+path+'/c_skuManage.htm"><img src="page/production/images/logo.png"></a></li>\

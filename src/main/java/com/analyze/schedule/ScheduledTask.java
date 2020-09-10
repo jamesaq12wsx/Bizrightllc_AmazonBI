@@ -6,6 +6,7 @@ import com.analyze.cons.TaskSts;
 import com.analyze.dao.PromotionTaskDOMapper;
 import com.analyze.dao.SkuScrapyTaskDOMapper;
 import com.analyze.model.PromotionTaskDO;
+import com.analyze.service.ProductKeywordTaskService;
 import com.analyze.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,9 @@ public class ScheduledTask {
 	@Autowired
 	@Qualifier("ReportServiceForPromotionImpl")
 	private ReportService reportServiceForPromotionImpl;
+
+	@Autowired
+	private ProductKeywordTaskService productKeywordTaskService;
 
 	/**
 	 * 定时变更Haw开启状态任务为抓取中
@@ -92,6 +96,36 @@ public class ScheduledTask {
 			log.debug("result : [{}]",result);
 			return;
 		}
+	}
+
+	/**
+	 * Find any open task and deal with the task
+	 */
+	@Scheduled(cron = "0/10 * * * * ?")
+	public void updateProductKeywordTask() {
+
+		log.info("Process Task［updateProductKeywordTask］");
+
+		productKeywordTaskService.processTask();
+
+//		Map<String,Object> params =new HashMap<>();
+//
+//		params.put("taskSts", TaskSts.TASK_WAITING);
+//		log.debug("查询任务状态 : [{}]",params.get("taskSts"));
+//		int taskCount = skuScrapyTaskDOMapper.selectCountByTaskSts(params);
+//		if (taskCount!=0) {
+//			log.debug("taskCount : [{}]",taskCount);
+//			return;
+//		}
+//
+//		params.put("oldTaskSts", TaskSts.TASK_OPEN);
+//		params.put("taskSts", TaskSts.TASK_WAITING);
+//		log.debug("params: [{}] ", params.toString());
+//		int result = skuScrapyTaskDOMapper.updateByTaskSts(params);
+//		if (result<0) {
+//			throw new RuntimeException(RespErrorEnum.SERVICE_DATA_EXPC.getSubStatusMsg());
+//		}
+
 	}
 
 }
