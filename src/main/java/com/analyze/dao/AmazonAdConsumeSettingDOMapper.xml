@@ -5,6 +5,7 @@
         <id column="SettingId" jdbcType="INTEGER" property="id"/>
         <result column="SettingName" jdbcType="VARCHAR" property="name"/>
         <result column="SettingDescription" jdbcType="VARCHAR" property="description"/>
+        <result column="SettingSearchWords" jdbcType="VARCHAR" property="searchWords"/>
         <result column="SettingActive" jdbcType="BOOLEAN" property="active"/>
         <result column="SettingCreatedBy" jdbcType="VARCHAR" property="createdBy"/>
         <result column="SettingUpdatedBy" jdbcType="VARCHAR" property="updatedBy"/>
@@ -45,6 +46,7 @@
         ${setting}."Id"             SettingId,
         ${setting}."Name"           SettingName,
         ${setting}."Description"    SettingDescription,
+        ${setting}."SearchWords"    SettingSearchWords,
         ${setting}."Active"         SettingActive,
         ${setting}."CreatedAt"      SettingCreatedAt,
         ${setting}."UpdatedAt"      SettingUpdatedAt,
