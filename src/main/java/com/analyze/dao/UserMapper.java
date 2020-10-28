@@ -4,8 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.analyze.model.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
+
+	/**
+	 * Get user account by user Id
+	 * @param userId
+	 * @return
+	 */
+	User getUserAccountByUserId(@Param("userId")Long userId);
+
     int deleteByPrimaryKey(Integer userid);
 
     int insert(User record);

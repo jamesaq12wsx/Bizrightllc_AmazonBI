@@ -69,10 +69,10 @@
     <bean id="DataSourceAspect" class="com.analyze.interceptor.DataSourceInterceptor" /><!-- 切面类 -->
     <aop:config>  
         <aop:advisor pointcut="execution(* com.analyze.service.impl.*.*(..))" advice-ref="DataSourceAspect" /><!-- 切入点s -->
-    </aop:config>  
-	
+    </aop:config>
 
 	<!-- myBatis文件 -->
+	<!-- This bean also let you use container transaction -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="MyDataSourcePool" />
 		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
@@ -88,6 +88,7 @@
         <property name="dataSource" ref="MyDataSourcePool" />
     </bean>
     <!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 -->  
-    <tx:annotation-driven transaction-manager="transactionManager" />  
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
 
 </beans>

@@ -101,7 +101,7 @@ public class ScheduledTask {
 	/**
 	 * Find any open task and deal with the task
 	 */
-	@Scheduled(cron = "0/10 * * * * ?")
+//	@Scheduled(cron = "0/10 * * * * ?")
 	public void updateProductKeywordTask() {
 
 		log.info("Process Task［updateProductKeywordTask］");

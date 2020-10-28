@@ -246,10 +246,11 @@ function reDrawResultTable(taskResult) {
     $("#taskResultTable").dataTable().fnDestroy();
 
     let table = $('#taskResultTable').DataTable({
+        dom: 'Bfrtip',
         pageLength: 20,
         data: taskResult.productKeywordResults ? taskResult.productKeywordResults : [],
         buttons: [
-            'excelHtml5'
+            'excel'
         ],
         columns: [
             {
@@ -377,7 +378,7 @@ function getStatusString(status) {
 }
 
 function openTaskResultModal(result) {
-    console.log('Open result modal', result);
+    // console.log('Open result modal', result);
     reDrawResultTable(result);
     taskResultModel.modal('show');
 }

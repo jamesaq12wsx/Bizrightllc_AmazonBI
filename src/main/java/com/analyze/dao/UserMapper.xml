@@ -20,6 +20,14 @@
     userid, username, password, inserttime, deadline, updatetime, parent_name, is_parent, 
     account_type, is_edit, Subaccount, untreated_password, note
   </sql>
+
+  <select id="getUserAccountByUserId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dbo.[user]
+    where userid = #{userId,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

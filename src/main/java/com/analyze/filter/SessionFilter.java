@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -24,7 +25,9 @@ import com.analyze.service.UserService;
 
 
 /**
- * 过滤器
+ * Session filter
+ * This filter check the session of request
+ * if not authorize redirect to login page
  * 
  * @author wei
  *
@@ -56,9 +59,12 @@ public class SessionFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpSession session = request.getSession(false);
+
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		String url = request.getRequestURI();
+
+//		logger.debug(String.format("[doFilter] Request: %s, Session: %s", url, session.getId()));
 
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath() + "/";
@@ -135,7 +141,8 @@ public class SessionFilter implements Filter {
 	 */
 	private boolean checkLogin(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		if (session != null) {
-			if (session.getAttribute("userid") != null && !"".equals(session.getAttribute("userid"))) {
+			String userId = session.getAttribute("userid") == null ? "" : session.getAttribute("userid").toString();
+			if (StringUtils.isNotEmpty(userId)) {
 				return true;
 			} else {
 				return false;
