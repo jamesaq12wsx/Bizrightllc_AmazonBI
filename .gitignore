@@ -3,4 +3,6 @@
 **/.DS_Store
 .idea/
 *.iml
-.DS_Store
+*/*.DS_Store
+*.log
+*.log.*
